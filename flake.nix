@@ -7,30 +7,19 @@
     forAllPkgs = pkgsWith: forAllSystems (system: pkgsWith nixpkgs.legacyPackages.${system});
   in {
     packages = forAllPkgs (pkgs: {
-      default = pkgs.stdenv.mkDerivation rec {
+      fonts = {
+        cormorant = pkgs.callPackage ./fonts/cormorant {};
+        dm-mono = pkgs.callPackage ./fonts/dm-mono {};
+        noto-fonts-symbols = pkgs.callPackage ./fonts/noto-fonts-symbols {};
+      };
+      default = let
+        fonts = builtins.attrValues self.packages.${pkgs.system}.fonts;
+      in pkgs.stdenv.mkDerivation {
         name = "resume";
         src = self;
-        nativeBuildInputs = [
-          pkgs.typst
-          pkgs.texlivePackages.cormorantgaramond.tex
-          pkgs.noto-fonts
-          (pkgs.stdenv.mkDerivation rec {
-            pname = "dm-mono";
-            version = "57fadab";
-            src = pkgs.fetchzip {
-              url = "https://github.com/googlefonts/dm-mono/archive/${version}.zip";
-              hash = "sha256-Xj6UmvH7tqW6xdobBxuafqc7TB1nrTFwHWv4DaZmwx8=";
-            };
-            installPhase = ''
-              runHook preInstall
-              mkdir -p $out/share/fonts/truetype
-              install -Dt $out/share/fonts/truetype $src/exports/*.ttf
-              runHook postInstall
-            '';
-          })
-        ];
+        nativeBuildInputs = [ pkgs.typst ] ++ fonts;
+        TYPST_FONT_PATHS = builtins.concatStringsSep ":" fonts;
         buildCommand = ''
-          export TYPST_FONT_PATHS=${builtins.foldl' (x: y: x + ":" + y) src nativeBuildInputs}
           mkdir -p $out
           typst compile $src/main.typ \
             $out/Résumé.pdf

@@ -112,7 +112,7 @@
 #let item(title, subtitle, date, location) = columns(2, gutter: -100%, {
   stack(dir: ltr,
     move(dy: -0.2em, 
-      text(font: "Noto Sans Symbols",
+      text(font: "Noto Sans Symbols 2",
         sym.diamond.filled.small)),
     h(.75em),
     box(
