@@ -41,7 +41,6 @@
       image(width: .95em, icon)))
     underline(link("https://" + url))
     linebreak()
-    v(weak: true, 0.5em)
   }
 
   v(1fr)
@@ -109,7 +108,7 @@
   )
 }))
 
-#let item(title, subtitle, date, location) = columns(2, gutter: -100%, {
+#let item(title, subtitle, date, location, body) = columns(2, gutter: -100%, {
   stack(dir: ltr,
     move(dy: -0.2em, 
       text(font: "Noto Sans Symbols 2",
@@ -129,16 +128,20 @@
     + linebreak()
     + location
   )
-}) + v(1em, weak: true)
+}) + if (body != []) {
+  v(1em, weak: true)
+  body
+}
 
-#let gh_item(title, desc, date, url, url_desc: "Repository") = item(
+#let gh_item(title, desc, date, url, url_desc: "Repository", body) = item(
   title,
   desc,
   date,
   box(place(right + bottom,
     move(dx: -.25em, dy: .1em,
       image(width: .8em, "icons/github.svg"))))
-  + underline(link("https://github.com/" + url, url_desc))
+  + underline(link("https://github.com/" + url, url_desc)),
+  body
 )
 
 #let course(code, sem, name) = {
