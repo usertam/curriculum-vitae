@@ -21,7 +21,7 @@
     set align(center)
     set text(weight: "semibold", tracking: .5pt)
     show text: smallcaps
-    "page "
+    "curriculum vitæ — page "
     counter(page).display()
     " of "
     [#counter(page).final().first()]

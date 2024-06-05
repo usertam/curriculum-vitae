@@ -14,17 +14,17 @@
       };
       default = let
         fonts = builtins.attrValues self.packages.${pkgs.system}.fonts;
-      in pkgs.stdenv.mkDerivation {
-        name = "resume";
+      in pkgs.stdenv.mkDerivation (final: {
+        name = "Curriculum Vitae";
         src = self;
         nativeBuildInputs = [ pkgs.typst ] ++ fonts;
         TYPST_FONT_PATHS = builtins.concatStringsSep ":" fonts;
         buildCommand = ''
           mkdir -p $out
           typst compile $src/main.typ \
-            $out/Résumé.pdf
+            "$out/${final.name}.pdf"
         '';
-      };
+      });
     });
   };
 }

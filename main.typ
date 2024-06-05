@@ -1,7 +1,7 @@
 #import "template.typ": *
 
 #show: project.with(
-  title: "Résumé",
+  title: "Curriculum Vitae",
   author: (
     name: "Samuel Tam",
     email: "hytamap@ust.hk",
@@ -17,12 +17,12 @@
 #experience[Projects]
 
 #gh_item(
-  smallcaps("Résumé"),
+  smallcaps("Curriculum vitæ"),
   "Expressively written and typeset, readable like Markdown.",
   "May 2024",
   "usertam/resume"
 )[
-- This résumé is written in Typst, a declarative and markup-based domain-specific language.
+- This curriculum vitæ is written in Typst, a declarative and markup-based domain-specific language.
 - Built with Nix for reproducibility and custom fonts support.
 ]
 
