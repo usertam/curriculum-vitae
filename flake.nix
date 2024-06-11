@@ -6,23 +6,45 @@
     forAllSystems = with nixpkgs.lib; genAttrs (import systems);
     forAllPkgs = pkgsWith: forAllSystems (system: pkgsWith nixpkgs.legacyPackages.${system});
   in {
-    packages = forAllPkgs (pkgs: {
+    packages = forAllPkgs (pkgs: rec {
       fonts = {
         cormorant = pkgs.callPackage ./fonts/cormorant {};
         dm-mono = pkgs.callPackage ./fonts/dm-mono {};
-        noto-fonts-symbols = pkgs.callPackage ./fonts/noto-fonts-symbols {};
       };
-      default = let
-        fonts = builtins.attrValues self.packages.${pkgs.system}.fonts;
-      in pkgs.stdenv.mkDerivation (final: {
+      default = pkgs.stdenvNoCC.mkDerivation (final: {
         name = "Curriculum Vitae";
         src = self;
-        nativeBuildInputs = [ pkgs.typst ] ++ fonts;
-        TYPST_FONT_PATHS = builtins.concatStringsSep ":" fonts;
-        buildCommand = ''
+        nativeBuildInputs = with pkgs; [
+          typst
+          ghostscript
+          exiftool
+          qpdf
+        ] ++ builtins.attrValues fonts;
+        enableParallelBuilding = true;
+        TYPST_FONT_PATHS = builtins.concatStringsSep ":" (map
+          (f: f + "/share/fonts/truetype")
+          (builtins.attrValues fonts));
+        buildPhase = ''
           mkdir -p $out
           typst compile $src/main.typ \
             "$out/${final.name}.pdf"
+        '';
+        installPhase = ''
+          gs -o a.pdf \
+            -dBATCH -dNOPAUSE -dNOOUTERSAVE \
+            -dPDFA=2 \
+            -sColorConversionStrategy=UseDeviceIndependentColor \
+            -dPDFSETTINGS=/prepress \
+            -dPDFACompatibilityPolicy=2 \
+            -sDEVICE=pdfwrite \
+            -sDocumentUUID=00000000-0000-0000-0000-000000000000 \
+            -sInstanceUUID=00000000-0000-0000-0000-000000000000 \
+            -dOmitInfoDate=true -dOmitID=true \
+            -dNumRenderingThreads=$NIX_BUILD_CORES \
+            -f "$out/${final.name}.pdf"
+          exiftool -producer= -documentid= -overwrite_original a.pdf
+          qpdf --deterministic-id --linearize --newline-before-endstream \
+            a.pdf "$out/${final.name} (A-2b).pdf"
         '';
       });
     });

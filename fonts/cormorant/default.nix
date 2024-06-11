@@ -1,9 +1,9 @@
 { lib
-, stdenv
+, stdenvNoCC
 , fetchgit
 }:
 
-stdenv.mkDerivation (final: {
+stdenvNoCC.mkDerivation (final: {
   pname = "cormorant";
   version = "3.609";
   src = fetchgit {

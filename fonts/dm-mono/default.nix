@@ -1,9 +1,9 @@
 { lib
-, stdenv
+, stdenvNoCC
 , fetchzip
 }:
 
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "dm-mono";
   version = "2020-04-15";
   src = fetchzip {

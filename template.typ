@@ -6,22 +6,25 @@
   author: (name: "", email: "", email-alt: "", bio: ""),
   bio: "",
   links: (),
+  date: none,
   body,
 ) = {
   // Set the document's basic properties.
-  set document(title: title, author: author.name)
+  set document(title: title, author: author.name, date: date)
   set page(paper: "a4", margin: 1in)
   set par(justify: true, leading: .55em)
-  set text(10pt, font: "Cormorant Garamond", weight: "medium")
+  set text(10pt, font: "Cormorant Garamond", weight: "medium", fallback: false)
   set list(indent: 1.25em)
   set underline(stroke: .2pt)
-  
+
   // Set page footer.
   set page(footer: context {
     set align(center)
     set text(weight: "semibold", tracking: .5pt)
-    show text: smallcaps
-    "curriculum vitæ — page "
+    show text: text.with(font: "Cormorant", features: ("c2sc",))
+    show text: upper
+    "curriculum vitæ"
+    " — page "
     counter(page).display()
     " of "
     [#counter(page).final().first()]
@@ -101,7 +104,7 @@
   box(
     height: measure(" ", styles).height,
     align(right + horizon,
-      line(stroke: 0.1pt,
+      line(stroke: 0.2pt,
         end: (100% - 0.75em - measure(title, styles).width, 0%)
       )
     )
@@ -110,12 +113,10 @@
 
 #let item(title, subtitle, date, location, body) = columns(2, gutter: -100%, {
   stack(dir: ltr,
-    move(dy: -0.2em, 
-      text(font: "Noto Sans Symbols 2",
-        sym.diamond.filled.small)),
+    sym.diamond.filled,
     h(.75em),
     box(
-      text(weight: "bold", title) + 
+      text(weight: "bold", title) +
       if subtitle != "" {
         linebreak()
         text(style: "italic", subtitle)
@@ -145,10 +146,11 @@
 )
 
 #let course(code, sem, name) = {
-  let dot = h(.3em) + sym.dot + h(.3em)
+  let dot = h(.3em) + str.from-unicode(183) + h(.3em)
   let code = text(weight: "semibold",
-    smallcaps(upper(code.at(0)) + lower(code.slice(1))))
-  list(smallcaps(code + dot + sem + dot) + name)
+    code.at(0) + text(features: ("c2sc",), code.slice(1)))
+  list(text(font: "Cormorant", features: ("smcp",),
+    code + dot + sem + dot) + name)
 }
 
 #let label(color: blue, body) = context {
