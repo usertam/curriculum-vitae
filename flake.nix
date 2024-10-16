@@ -12,7 +12,7 @@
         dm-mono = pkgs.callPackage ./fonts/dm-mono {};
       };
       default = pkgs.stdenvNoCC.mkDerivation (final: {
-        name = "Curriculum Vitae";
+        name = "resume";
         src = self;
 
         nativeBuildInputs = with pkgs; [

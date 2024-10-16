@@ -1,19 +1,15 @@
-// The project function defines how your document looks.
-// It takes your content and some metadata and formats it.
-// Go ahead and customize it to your liking!
 #let project(
   title: "",
   author: (name: "", email: "", email-alt: "", bio: ""),
   bio: "",
   links: (),
-  date: none,
   body,
 ) = {
   // Set the document's basic properties.
-  set document(title: title, author: author.name, date: date)
+  set document(title: title, author: author.name)
   set page(paper: "a4", margin: 1in)
   set par(justify: true, leading: .55em)
-  set text(10pt, font: "Cormorant Garamond", weight: "medium", fallback: false)
+  set text(10pt, font: "Cormorant Garamond", weight: "medium")
   set list(indent: 1.25em)
   set underline(stroke: .2pt)
 
@@ -21,10 +17,8 @@
   set page(footer: context {
     set align(center)
     set text(weight: "semibold", tracking: .5pt)
-    show text: text.with(font: "Cormorant", features: ("c2sc",))
-    show text: upper
-    "curriculum vitæ"
-    " — page "
+    show text: smallcaps
+    "page "
     counter(page).display()
     " of "
     [#counter(page).final().first()]
@@ -35,14 +29,14 @@
     0.8em,
     font: "DM Mono",
     weight: "light",
-    tracking: -.25pt
+    tracking: -.1pt
   )
 
   // Website links.
   let website(icon, url) = {
     box(move(dx: -.4em, dy: .125em,
       image(width: .95em, icon)))
-    underline(link("https://" + url))
+    link(url)
     linebreak()
   }
 
@@ -72,21 +66,26 @@
       text(bio)
       v(.5em)
     }
+
     colbreak()
     set align(right)
-    mono({
-      if author.email-alt != "" {
-        link(
-          "mailto:" + author.email-alt,
-          "General: <" + author.email-alt + ">"
-        )
-        linebreak()
-      }
-      links.map(it => website(..it))
-        .fold("", (x, y) => x + y)
-    })
+    set par(leading: .25em)
+    show text: mono
+
+    if author.email-alt != "" {
+      link(
+        "mailto:" + author.email-alt,
+        "General: <" + author.email-alt + ">"
+      )
+      linebreak()
+    }
+
+    show link: underline
+    links.map(it => website(..it))
+      .fold("", (x, y) => x + y)
   })
 
+  show link: underline
   body
 
   v(2fr)
@@ -104,7 +103,7 @@
   box(
     height: measure(" ", styles).height,
     align(right + horizon,
-      line(stroke: 0.2pt,
+      line(stroke: 0.1pt,
         end: (100% - 0.75em - measure(title, styles).width, 0%)
       )
     )
@@ -113,7 +112,9 @@
 
 #let item(title, subtitle, date, location, body) = columns(2, gutter: -100%, {
   stack(dir: ltr,
-    sym.diamond.filled,
+    move(dy: -0em,
+      text(font: "Noto Sans Symbols 2",
+        sym.diamond.filled.small)),
     h(.75em),
     box(
       text(weight: "bold", title) +
@@ -134,53 +135,71 @@
   body
 }
 
-#let gh_item(title, desc, date, url, url_desc: "Repository", body) = item(
-  title,
+#let gh_item(title, desc, date, url, url_desc: "Source", body) = item(
+  smallcaps(title),
   desc,
   date,
   box(place(right + bottom,
     move(dx: -.25em, dy: .1em,
       image(width: .8em, "icons/github.svg"))))
-  + underline(link("https://github.com/" + url, url_desc)),
+  + link("https://github.com/" + url, url_desc),
   body
 )
 
-#let course(code, sem, name) = {
-  let dot = h(.3em) + str.from-unicode(183) + h(.3em)
-  let code = text(weight: "semibold",
-    code.at(0) + text(features: ("c2sc",), code.slice(1)))
-  list(text(font: "Cormorant", features: ("smcp",),
-    code + dot + sem + dot) + name)
+#let mono = text.with(
+  0.8em,
+  font: "DM Mono",
+  weight: "light",
+  tracking: -.1pt
+)
+
+#let github(url) = {
+  mono(link("https://github.com/" + url, url))
 }
 
-#let label(color: blue, body) = context {
-  let text = text(0.7em, font: "DM Mono", weight: "bold", fill: white, tracking: -.5pt, smallcaps[#body])
-  box(width: measure(text).width + 1.25em, pad(x: .5em, place(left + bottom, move(dy: .22em, block(fill: color.lighten(20%), height: 1em, width: measure(text).width + 1em, radius: 1em,
-  align(center + horizon, text))))))
+#let dot = {
+  h(.4em) + box(place(center + bottom, $dot$)) + h(.4em)
 }
 
-#let label-nix = label(color: color.blue.lighten(25%), "nix")
+#let course(sem, courses, extra: none) = {
+  set text(hyphenate: false)
+  list({
+    smallcaps(text(weight: "semibold", sem))
+    courses.fold("", (x, y) => x + dot + y)
+    if (extra != none) {
+      dot
+      smallcaps(text(weight: "semibold", extra.at(0)))
+      extra.at(1).fold("", (x, y) => x + dot + y)
+    }
+  })
+}
 
-#let tex = {
+#let TeX = {
   "T"
-  h(-.1667em)
-  box(move(dy: (.5*282168/655361)*1em, "E"))
-  h(-.125em)
+  h(-.22em)
+  box(move(dy: .21em, "E"))
+  h(-.11em)
   "X"
 }
 
-#let latex = {
+#let LaTeX = {
   "L"
-  h(-.32em)
-  box(move(dy: -.175em, text(0.75em, "A")))
-  h(-.15em)
-  tex
+  h(-.29em)
+  box(move(dy: -.175em, text(.74em, "A")))
+  h(-.1em)
+  TeX
 }
 
-#let ctx = {
+#let ConTeXt = {
   "Con"
   h(-.1em)
-  tex
+  TeX
   h(-.05em)
   "t"
 }
+
+#show "HKUST": text(0.95 * 10pt, "HKUST")
+#show "HKUSTSU": text(0.95 * 10pt, "HKUSTSU")
+
+#show "(2023)": text(0.825 * 10pt, "(") + "2023" + text(0.825 * 10pt, ")")
+#show "(2024)": text(0.825 * 10pt, "(") + "2024" + text(0.825 * 10pt, ")")
