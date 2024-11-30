@@ -8,6 +8,7 @@
   in {
     packages = forAllPkgs (pkgs: rec {
       fonts = {
+        inherit (pkgs) twitter-color-emoji;
         cormorant = pkgs.callPackage ./fonts/cormorant {};
         dm-mono = pkgs.callPackage ./fonts/dm-mono {};
       };
@@ -24,10 +25,9 @@
 
         enableParallelBuilding = true;
 
-        TYPST_FONT_PATHS = builtins.concatStringsSep ":" (map
-          # Force truetype fonts for now
-          (f: f + "/share/fonts/truetype")
-          (builtins.attrValues fonts));
+        TYPST_FONT_PATHS = "${fonts.cormorant}/share/fonts/opentype"
+          + ":${fonts.dm-mono}/share/fonts/truetype"
+          + ":${fonts.twitter-color-emoji}/share/fonts/truetype";
 
         buildPhase = ''
           echo "Build stage 1: compile typst source"
@@ -37,7 +37,6 @@
           gs -o build-stage-2.pdf \
             -dBATCH -dNOPAUSE -dNOOUTERSAVE \
             -dPDFA=2 \
-            -sColorConversionStrategy=UseDeviceIndependentColor \
             -dPDFSETTINGS=/prepress \
             -dPDFACompatibilityPolicy=2 \
             -sDEVICE=pdfwrite \

@@ -1,28 +1,17 @@
 #let project(
-  title: "",
-  author: (name: "", email: "", email-alt: "", bio: ""),
-  bio: "",
+  title: none,
+  author: (name: none, email: none, email-alt: none, bio: none),
+  bio: none,
   links: (),
   body,
 ) = {
   // Set the document's basic properties.
   set document(title: title, author: author.name)
-  set page(paper: "a4", margin: 1in)
+  set page(paper: "a4", margin: (x: 1in, y: 0.75in))
   set par(justify: true, leading: .55em)
-  set text(10pt, font: "Cormorant Garamond", weight: "medium")
+  set text(10pt, font: "Cormorant Garamond", weight: "medium", fallback: false)
   set list(indent: 1.25em)
   set underline(stroke: .2pt)
-
-  // Set page footer.
-  set page(footer: context {
-    set align(center)
-    set text(weight: "semibold", tracking: .5pt)
-    show text: smallcaps
-    "page "
-    counter(page).display()
-    " of "
-    [#counter(page).final().first()]
-  })
 
   // Set mono text style.
   let mono = text.with(
@@ -34,16 +23,17 @@
 
   // Website links.
   let website(icon, url) = {
-    box(move(dx: -.4em, dy: .125em,
-      image(width: .95em, icon)))
-    link(url)
+    context box(height: measure("").height,
+      move(dy: 1pt, align(bottom, image(height: 0.9em, icon))))
+    h(0.35em)
+    link("https://" + url, url)
     linebreak()
   }
 
   v(1fr)
 
   // Header with name, description and links.
-  columns(2, gutter: -100em, {
+  columns(2, gutter: -100%, {
     text(1.6em,
       weight: "semibold",
       features: (smcp: 1),
@@ -57,7 +47,7 @@
     )
     linebreak()
     v(.75em, weak: true)
-    text(features: (smcp: 1), tracking: 0.2pt,
+    text(features: (smcp: 1), tracking: 0.25pt,
       author.bio
     )
     if bio != "" {
@@ -69,29 +59,30 @@
 
     colbreak()
     set align(right)
-    set par(leading: .25em)
     show text: mono
-
-    if author.email-alt != "" {
-      link(
-        "mailto:" + author.email-alt,
-        "General: <" + author.email-alt + ">"
-      )
-      linebreak()
-    }
-
     show link: underline
     links.map(it => website(..it))
       .fold("", (x, y) => x + y)
+
+    if author.at("email-alt", default: none) != none {
+      context box(height: measure("").height,
+        move(dy: -1.5pt, align(bottom, text(1.1em, font: "Twitter Color Emoji", fallback: true, "🏢"))))
+      h(0.15em)
+      link(
+        "mailto:" + author.email-alt
+      )
+    }
   })
+
+  v(1em, weak: true)
 
   show link: underline
   body
 
-  v(2fr)
+  v(1fr)
 }
 
-#let experience(body) = style(styles => block({
+#let experience(body) = v(.25em) + context block({
   let title = text(1.2em,
     weight: "bold",
     tracking: .5pt,
@@ -101,21 +92,20 @@
   title
   h(1fr)
   box(
-    height: measure(" ", styles).height,
+    height: measure("").height,
     align(right + horizon,
       line(stroke: 0.1pt,
-        end: (100% - 0.75em - measure(title, styles).width, 0%)
+        end: (100% - 0.75em - measure(title).width, 0%)
       )
     )
   )
-}))
+})
 
 #let item(title, subtitle, date, location, body) = columns(2, gutter: -100%, {
   stack(dir: ltr,
-    move(dy: -0em,
-      text(font: "Noto Sans Symbols 2",
-        sym.diamond.filled.small)),
-    h(.75em),
+    context place(horizon, dy: .15em,
+      text(2em, sym.diamond.filled)),
+    h(1.25em),
     box(
       text(weight: "bold", title) +
       if subtitle != "" {
@@ -150,7 +140,7 @@
   0.8em,
   font: "DM Mono",
   weight: "light",
-  tracking: -.1pt
+  tracking: -.35pt
 )
 
 #let github(url) = {
@@ -162,16 +152,13 @@
 }
 
 #let course(sem, courses, extra: none) = {
-  set text(hyphenate: false)
-  list({
-    smallcaps(text(weight: "semibold", sem))
-    courses.fold("", (x, y) => x + dot + y)
-    if (extra != none) {
-      dot
-      smallcaps(text(weight: "semibold", extra.at(0)))
-      extra.at(1).fold("", (x, y) => x + dot + y)
-    }
-  })
+  smallcaps(text(weight: "semibold", sem))
+  courses.fold("", (x, y) => x + dot + y)
+  if (extra != none) {
+    dot
+    smallcaps(text(weight: "semibold", extra.at(0)))
+    extra.at(1).fold("", (x, y) => x + dot + y)
+  }
 }
 
 #let TeX = {
