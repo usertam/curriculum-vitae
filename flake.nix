@@ -8,8 +8,7 @@
   in {
     packages = forAllPkgs (pkgs: rec {
       fonts = {
-        inherit (pkgs) twitter-color-emoji;
-        cormorant = pkgs.callPackage ./fonts/cormorant {};
+        inherit (pkgs) mona-sans twitter-color-emoji;
         dm-mono = pkgs.callPackage ./fonts/dm-mono {};
       };
       default = pkgs.stdenvNoCC.mkDerivation (final: {
@@ -25,7 +24,7 @@
 
         enableParallelBuilding = true;
 
-        TYPST_FONT_PATHS = "${fonts.cormorant}/share/fonts/opentype"
+        TYPST_FONT_PATHS = "${fonts.mona-sans}/share/fonts/opentype"
           + ":${fonts.dm-mono}/share/fonts/truetype"
           + ":${fonts.twitter-color-emoji}/share/fonts/truetype";
 

@@ -9,16 +9,23 @@
   set document(title: title, author: author.name)
   set page(paper: "a4", margin: (x: 1in, y: 0.75in))
   set par(justify: true, leading: .55em)
-  set text(10pt, font: "Cormorant Garamond", weight: "medium", fallback: false)
-  set list(indent: 1.25em)
+  set text(9pt, font: "Mona Sans", weight: "regular", fallback: false)
   set underline(stroke: .2pt)
 
   // Set mono text style.
   let mono = text.with(
-    0.8em,
+    .9em,
     font: "DM Mono",
     weight: "light",
-    tracking: -.1pt
+    tracking: -.25pt
+  )
+
+  // Handle.
+  let handle = box.with(
+    fill: luma(240),
+    inset: (x: 3pt, y: 1pt),
+    outset: (y: 2pt),
+    radius: 2pt,
   )
 
   // Website links.
@@ -34,44 +41,38 @@
 
   // Header with name, description and links.
   columns(2, gutter: -100%, {
-    text(1.6em,
+    text(1.5em,
       weight: "semibold",
       features: (smcp: 1),
-      tracking: .5pt,
+      tracking: 0.25pt,
       author.name
     )
     h(.5em)
-    link(
-      "mailto:" + author.email,
-      mono("<" + author.email + ">")
-    )
+    handle(mono("@usertam"))
     linebreak()
-    v(.75em, weak: true)
-    text(features: (smcp: 1), tracking: 0.25pt,
-      author.bio
-    )
-    if bio != "" {
-      linebreak()
-      v(1.25em, weak: true)
-      text(bio)
-      v(.5em)
-    }
+    v(.875em, weak: true)
+    text(tracking: 0.15pt, author.bio)
+    linebreak()
+    v(1.25em, weak: true)
+    text(bio)
+    v(.5em)
 
     colbreak()
     set align(right)
     show text: mono
     show link: underline
-    links.map(it => website(..it))
-      .fold("", (x, y) => x + y)
 
-    if author.at("email-alt", default: none) != none {
-      context box(height: measure("").height,
-        move(dy: -1.5pt, align(bottom, text(1.1em, font: "Twitter Color Emoji", fallback: true, "🏢"))))
-      h(0.15em)
-      link(
-        "mailto:" + author.email-alt
-      )
-    }
+    // Email link.
+    context box(height: measure("").height,
+      move(dy: -1.5pt, align(bottom, text(1.1em, font: "Twitter Color Emoji", fallback: true, "✉️"))))
+    h(0.15em)
+    link(
+      "mailto:" + author.email
+    )
+    linebreak()
+
+    // All website links.
+    links.map(it => website(..it)).join()
   })
 
   v(1em, weak: true)
@@ -83,9 +84,9 @@
 }
 
 #let experience(body) = v(.25em) + context block({
-  let title = text(1.2em,
-    weight: "bold",
-    tracking: .5pt,
+  let title = text(1.1em,
+    weight: "medium",
+    tracking: .1pt,
     features: (smcp: 1),
     body
   )
@@ -103,29 +104,24 @@
 
 #let item(title, subtitle, date, location, body) = columns(2, gutter: -100%, {
   stack(dir: ltr,
-    context place(horizon, dy: .15em,
-      text(2em, sym.diamond.filled)),
-    h(1.25em),
-    box(
-      text(weight: "bold", title) +
-      if subtitle != "" {
-        linebreak()
-        text(style: "italic", subtitle)
-      }
-    )
+    context place(horizon, dy: .35em, sym.bullet),
+    box(inset: (left: 1em), {
+      text(weight: "medium", title)
+      linebreak()
+      text(style: "italic", subtitle)
+      v(-.25em)
+      body
+    })
   )
   colbreak()
   place(right,
-    text(weight: "semibold", date)
+    text(weight: "medium", date)
     + linebreak()
     + location
   )
-}) + if (body != []) {
-  v(1em, weak: true)
-  body
-}
+})
 
-#let gh_item(title, desc, date, url, url_desc: "Source", body) = item(
+#let gh_item(title, desc, date, url, url_desc: "Repository", body) = item(
   smallcaps(title),
   desc,
   date,
@@ -137,7 +133,7 @@
 )
 
 #let mono = text.with(
-  0.8em,
+  0.95em,
   font: "DM Mono",
   weight: "light",
   tracking: -.35pt
@@ -184,9 +180,3 @@
   h(-.05em)
   "t"
 }
-
-#show "HKUST": text(0.95 * 10pt, "HKUST")
-#show "HKUSTSU": text(0.95 * 10pt, "HKUSTSU")
-
-#show "(2023)": text(0.825 * 10pt, "(") + "2023" + text(0.825 * 10pt, ")")
-#show "(2024)": text(0.825 * 10pt, "(") + "2024" + text(0.825 * 10pt, ")")

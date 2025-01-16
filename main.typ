@@ -5,8 +5,7 @@
   author: (
     name: "Samuel Tam",
     email: "hello@usertam.dev",
-    email-alt: "hytamap@ust.hk",
-    bio: [Open-Source Software Developer. Final Year at #text(0.95 * 10pt, "HKUST").],
+    bio: [Open-Source Software Developer. Final Year at HKUST.],
   ),
   links: (
     ("icons/linkedin.svg", "linkedin.com/in/usertam"),
@@ -22,16 +21,16 @@
   "June 2024",
   "usertam/toolchain"
 )[
-- Leveraging GitHub Actions along with automated scripts, we perform weekly builds against the LLVM #link("https://github.com/llvm/llvm-project", mono[master]). The build is then optimized, stripped and patched for portability across different environments.
+  Leveraging GitHub Actions with scheduled scripts, we can perform weekly builds against the LLVM #link("https://github.com/llvm/llvm-project", mono[master]). The build is then optimized, stripped and patched for portability across different environments.
 ]
 
 #gh_item(
-  "Context–minimals",
+  ConTeXt + "-minimals",
   "Typesetting system made reproducible.",
   "August 2022",
   "usertam/context-minimals"
 )[
-- After analyzing the dependencies of #ConTeXt LMTX (like #LaTeX, derived from #TeX), we rewrite the installation declaratively in #mono[nix]. This results in a far more efficient installation that is both reproducible and portable.
+  After analyzing the dependencies of #ConTeXt LMTX (like #LaTeX, derived from #TeX), we rewrite the installation declaratively in #mono[nix]. This results in a far more efficient installation that is both reproducible and portable.
 ]
 
 #gh_item(
@@ -40,22 +39,22 @@
   "September 2021",
   "usertam/dumpling-lineage-kernel"
 )[
-- With open-source kernel trees released by Qualcomm, we cherry-pick upstream changes and custom patches to rebuild the Android kernel, enabling support for custom kernel features (e.g. namespaces for containers).
+  We use open-source kernel trees released by Qualcomm, with upstream changes and custom patches to rebuild the Android kernel, enabling support for custom kernel features (e.g. namespaces for containers).
 ]
 
 #experience[Contributions]
 
 #v(-.1em)
 
-As an active member of the open-source software community, I contribute to foundational projects that are consumed by other developers, fostering collaboration and innovation on the global software supply chain.
+As part of the open-source software community, we contribute to the modern foundation of software stacks consumed by other developers, fostering collaboration and innovation on global software supply chain. 
 
 #v(-.25em)
 
 #columns(2, gutter: 1.25em)[
   #set list(indent: 0pt, body-indent: 0.75em)
-  #set text(0.8em, font: "DM Mono", weight: "light", tracking: -0.1pt)
+  #set text(0.875em, font: "DM Mono", weight: "light", tracking: -0.1pt)
 
-  - #link("https://github.com/NixOS/nixpkgs", text(weight: "regular", "NixOS & Nixpkgs"))
+  - #link("https://github.com/NixOS/nixpkgs", text(weight: "regular", "Nixpkgs Maintainer")) 
     #set text(0.8em, tracking: -0.25pt)
     #link("https://github.com/NixOS/nixpkgs/pull/179050", "[1]")
     #link("https://github.com/NixOS/nixpkgs/pull/183085", "[2]")
@@ -74,6 +73,8 @@ As an active member of the open-source software community, I contribute to found
     #link("https://github.com/NixOS/nixpkgs/pull/236693", "[15]")
     #link("https://github.com/NixOS/nixpkgs/pull/320065", "[16]")
     #link("https://github.com/NixOS/nixpkgs/pull/352329", "[17]")
+    #link("https://github.com/NixOS/nixpkgs/pull/369766", "[18]")
+    #link("https://github.com/NixOS/nixpkgs/pull/373359", "[19]")
   - #link("https://github.com/nix-community", text(weight: "regular", "nix-community: Nix community projects"))
     #set text(0.8em, tracking: -0.25pt)
     #link("https://github.com/nix-community/nixos-generators/pull/156", "[1]")
@@ -101,7 +102,7 @@ As an active member of the open-source software community, I contribute to found
   "September 2023 – Current",
   "Academic Building, Room 3528"
 )[
-- Keynote Speaker of university credit-bearing seminars: #link("https://www.youtube.com/watch?v=53TWNe3_z38", mono[Developing with GitHub]) and #link("https://csess.su.hkust.edu.hk/activity/149", mono[The Unix Philosophy]).
+- Keynote Speaker of credit-bearing seminars #link("https://www.youtube.com/watch?v=53TWNe3_z38", mono[Developing with GitHub]) and #link("https://csess.su.hkust.edu.hk/activity/149", mono[The Unix Philosophy]).
 - Co-host of the Departmental Briefing for Direct Entry Students in 2023, and again in 2024.
 - Representative Speaker of CSE Program Orientation Talk in 2023.
 ]
@@ -129,20 +130,37 @@ As an active member of the open-source software community, I contribute to found
 - Formerly maintained public documents, confidential records and systems for operational excellency.
 ]
 
+#experience[Certificates]
+
+#item(
+  "Amazon Web Services (AWS)",
+  v(-.5em) + text(number-type: "lining", style: "normal", [
+    - AWS Certified SysOps Administrator – Associate (SOA-C02)
+    - AWS Certified Cloud Practitioner (CLF-C02)
+    - AWS Certified AI Practitioner (CLF-C01)
+  ]),
+  "January 2025",
+  context box(height: measure("").height,
+    move(dy: 1pt, align(bottom, image(height: 0.9em, "icons/linkedin.svg"))))
+  + h(0.35em)
+  + link("https://www.linkedin.com/in/usertam/details/certifications/", "LinkedIn")
+)[]#v(.25em)
+
 #experience[Education]
 
 #item(
   "The Hong Kong University of Science and Technology",
   "Final Year, Bachelor of Engineering in Computer Engineering",
   "July 2026",
-  "Clear Water Bay, Kowloon"
-)[
-- #course("Fall 2024", ("Cybersecurity", "Artificial Intelligence Ethics"))
-- #course("Spring 2024", ("Advanced Deep Learning Architectures", "Modern Compiler Construction",))
-- #course("Fall 2023", ("Design and Analysis of Algorithms",))
-- #course("Spring 2023", ("Introduction to Embedded Systems", "Operating Systems",))
-- #course("Fall 2022", ("Honors Object-Oriented Programming and Data Structures",))
-]
+  "Clear Water Bay, Kowloon",
+  (
+    "Advanced Deep Learning Architectures",
+    "Design and Analysis of Algorithms",
+    "Cybersecurity",
+    "Introduction to Embedded Systems",
+    "Honors Object-Oriented Programming and Data Structures",
+  ).join(dot)
+)
 
 #item(
   "The University of Wollongong College Hong Kong",
