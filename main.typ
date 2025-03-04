@@ -13,6 +13,73 @@
   ),
 )
 
+#experience[Development]
+
+#gh_item(
+  [Open-Source Software Developer, \
+    NixOS/Nixpkgs Maintainer, _formerly Contributor_],
+  "",
+  "3 Years" + h(.275em) + sym.dot.c + h(.275em) + "Since 2022",
+  "pulls?q=is%3Apr+author%3Ausertam",
+  url_desc: "Pull Requests"
+)[
+  As contributor to recognized open source initiatives, I collaborate with many in the open-source software community to shape the very foundation of modern software stacks used by developers.
+
+  #v(-.25em)
+
+  #columns(2, gutter: 1em, text(0.9em, font: "DM Mono", weight: "light", tracking: -0.2pt, {
+    pr_list(
+      "NixOS/Nixpkgs",
+      "https://github.com/NixOS/nixpkgs", (
+        179050, 183085, 184327, 188161, 191785, 192041, 206860, 207727, 215775, 236694,
+        247789, 247792, 247793, 236110, 236693, 320065, 352329, 369766, 373359, 375602, 385701
+      )
+    )
+    pr_list(
+      "nix-community: Nix community projects",
+      "https://github.com/nix-community", (
+        "https://github.com/nix-community/nixos-generators/pull/156",
+        "https://github.com/nix-community/nix-index/pull/183"
+      )
+    )
+    colbreak()
+    pr_list(
+      "GNU LilyPond: music engraving software",
+      "https://lilypond.org", (
+        "https://git.savannah.gnu.org/gitweb/?p=lilypond.git;a=commit;h=adaed195306a85d611aa9f3177b8db28b01b1dc6",
+      )
+    )
+    pr_list(
+      "kitty: GPU-based terminal emulator",
+      "https://sw.kovidgoyal.net/kitty", (
+        "https://github.com/kovidgoyal/kitty/pull/6118",
+        "https://github.com/kovidgoyal/kitty/pull/6120",
+      )
+    )
+    pr_list(
+      "libfaketime: datetime manipulation library",
+      "https://github.com/wolfcw/libfaketime", (
+        415,
+      )
+    )
+  }))
+]
+
+#item(
+  [AWS Educate Cloud Ambassador, AWS Certified, \
+    Nominated for AWS Community Builder],
+  "Advocating cloud computing through my lens of personal projects.",
+  "January 2025",
+  context box(height: measure("").height,
+    move(dy: 1pt, align(bottom, image(height: 0.9em, "icons/linkedin.svg"))))
+  + h(0.35em)
+  + link("https://www.linkedin.com/in/usertam/details/certifications", "LinkedIn")
+)[
+  - AWS Certified SysOps Administrator – Associate (SOA-C02)
+  - AWS Certified Cloud Practitioner (CLF-C02)
+  - AWS Certified AI Practitioner (CLF-C01)
+]
+
 #experience[Projects]
 
 #gh_item(
@@ -42,58 +109,6 @@
   We use open-source kernel trees released by Qualcomm, with upstream changes and custom patches to rebuild the Android kernel, enabling support for custom kernel features (e.g. namespaces for containers).
 ]
 
-#experience[Contributions]
-
-#v(-.1em)
-
-As part of the open-source software community, we contribute to the modern foundation of software stacks consumed by other developers, fostering collaboration and innovation on global software supply chain. 
-
-#v(-.25em)
-
-#columns(2, gutter: 1.25em)[
-  #set list(indent: 0pt, body-indent: 0.75em)
-  #set text(0.875em, font: "DM Mono", weight: "light", tracking: -0.1pt)
-
-  - #link("https://github.com/NixOS/nixpkgs", text(weight: "regular", "Nixpkgs Maintainer")) 
-    #set text(0.8em, tracking: -0.25pt)
-    #link("https://github.com/NixOS/nixpkgs/pull/179050", "[1]")
-    #link("https://github.com/NixOS/nixpkgs/pull/183085", "[2]")
-    #link("https://github.com/NixOS/nixpkgs/pull/184327", "[3]")
-    #link("https://github.com/NixOS/nixpkgs/pull/188161", "[4]")
-    #link("https://github.com/NixOS/nixpkgs/pull/191785", "[5]")
-    #link("https://github.com/NixOS/nixpkgs/pull/192041", "[6]")
-    #link("https://github.com/NixOS/nixpkgs/pull/206860", "[7]")
-    #link("https://github.com/NixOS/nixpkgs/pull/207727", "[8]")
-    #link("https://github.com/NixOS/nixpkgs/pull/215775", "[9]")
-    #link("https://github.com/NixOS/nixpkgs/pull/236694", "[10]")
-    #link("https://github.com/NixOS/nixpkgs/pull/247789", "[11]")
-    #link("https://github.com/NixOS/nixpkgs/pull/247792", "[12]")
-    #link("https://github.com/NixOS/nixpkgs/pull/247793", "[13]")
-    #link("https://github.com/NixOS/nixpkgs/pull/236110", "[14]")
-    #link("https://github.com/NixOS/nixpkgs/pull/236693", "[15]")
-    #link("https://github.com/NixOS/nixpkgs/pull/320065", "[16]")
-    #link("https://github.com/NixOS/nixpkgs/pull/352329", "[17]")
-    #link("https://github.com/NixOS/nixpkgs/pull/369766", "[18]")
-    #link("https://github.com/NixOS/nixpkgs/pull/373359", "[19]")
-  - #link("https://github.com/nix-community", text(weight: "regular", "nix-community: Nix community projects"))
-    #set text(0.8em, tracking: -0.25pt)
-    #link("https://github.com/nix-community/nixos-generators/pull/156", "[1]")
-    #link("https://github.com/nix-community/nix-index/pull/183", "[2]")
-
-  #colbreak()
-
-  - #link("https://lilypond.org", text(weight: "regular", "GNU LilyPond: music engraving software"))
-    #set text(0.8em, tracking: -0.25pt)
-    #link("https://git.savannah.gnu.org/gitweb/?p=lilypond.git;a=commit;h=adaed195306a85d611aa9f3177b8db28b01b1dc6", "[1]")
-  - #link("https://sw.kovidgoyal.net/kitty", text(weight: "regular", "kitty: GPU-based terminal emulator"))
-    #set text(0.8em, tracking: -0.25pt)
-    #link("https://github.com/kovidgoyal/kitty/pull/6118", "[1]")
-    #link("https://github.com/kovidgoyal/kitty/pull/6120", "[2]")
-  - #link("https://github.com/wolfcw/libfaketime", text(weight: "regular", "libfaketime: datetime manipulation library"))
-    #set text(0.8em, tracking: -0.25pt)
-    #link("https://github.com/wolfcw/libfaketime/pull/415", "[1]")
-]
-
 #experience[Experience]
 
 #item(
@@ -102,9 +117,8 @@ As part of the open-source software community, we contribute to the modern found
   "September 2023 – Current",
   "Academic Building, Room 3528"
 )[
-- Keynote Speaker of credit-bearing seminars #link("https://www.youtube.com/watch?v=53TWNe3_z38", mono[Developing with GitHub]) and #link("https://csess.su.hkust.edu.hk/activity/149", mono[The Unix Philosophy]).
-- Co-host of the Departmental Briefing for Direct Entry Students in 2023, and again in 2024.
-- Representative Speaker of CSE Program Orientation Talk in 2023.
+  - Keynote Speaker of credit-bearing seminars #link("https://www.youtube.com/watch?v=53TWNe3_z38", mono[Developing with GitHub]) and #link("https://csess.su.hkust.edu.hk/activity/149", mono[The Unix Philosophy]).
+  - Co-host of the Departmental Briefing for Direct Entry Students in 2023, and again in 2024.
 ]
 
 #item(
@@ -114,9 +128,8 @@ As part of the open-source software community, we contribute to the modern found
   "July 2023 – Current",
   "Academic Building, Room 4202"
 )[
-- Maintain all departmental computer science labs for undergraduates and postgraduates.
-- Provide technical support including hand-ons repairs for lab equipment and server infrastructure.
-- Serve as a liaison for professional and reliable inter-departmental communications.
+  - Maintain all departmental lab and server infrastructure for undergraduates and postgraduates.
+  - Serve as a liaison for professional and reliable inter-departmental communications.
 ]
 
 #item(
@@ -125,26 +138,9 @@ As part of the open-source software community, we contribute to the modern found
   "April 2023 – Current",
   "Student Centre, Mailbox #3"
 )[
-- Principal Coordinator of CSE Festival 2023. Master of Ceremonies of CSE Farewell Dinner 2023.
-- Oversee executive operations, provide strategic guidance and support to the student society.
-- Formerly maintained public documents, confidential records and systems for operational excellency.
+  - Principal Coordinator of CSE Festival 2023. Master of Ceremonies of CSE Farewell Dinner 2023.
+  - Oversee executive operations, provide strategic guidance and support to the student society.
 ]
-
-#experience[Certificates]
-
-#item(
-  "Amazon Web Services (AWS)",
-  v(-.5em) + text(number-type: "lining", style: "normal", [
-    - AWS Certified SysOps Administrator – Associate (SOA-C02)
-    - AWS Certified Cloud Practitioner (CLF-C02)
-    - AWS Certified AI Practitioner (CLF-C01)
-  ]),
-  "January 2025",
-  context box(height: measure("").height,
-    move(dy: 1pt, align(bottom, image(height: 0.9em, "icons/linkedin.svg"))))
-  + h(0.35em)
-  + link("https://www.linkedin.com/in/usertam/details/certifications/", "LinkedIn")
-)[]#v(.25em)
 
 #experience[Education]
 
@@ -155,9 +151,9 @@ As part of the open-source software community, we contribute to the modern found
   "Clear Water Bay, Kowloon",
   (
     "Advanced Deep Learning Architectures",
-    "Design and Analysis of Algorithms",
     "Cybersecurity",
-    "Introduction to Embedded Systems",
+    "Competitive Programming in Cybersecurity II",
+    "Design and Analysis of Algorithms",
     "Honors Object-Oriented Programming and Data Structures",
   ).join(dot)
 )

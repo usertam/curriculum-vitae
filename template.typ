@@ -31,8 +31,8 @@
   // Website links.
   let website(icon, url) = {
     context box(height: measure("").height,
-      move(dy: 1pt, align(bottom, image(height: 0.9em, icon))))
-    h(0.35em)
+      move(dx: -.25em, dy: .1em,
+        align(bottom, image(height: 0.9em, icon))))
     link("https://" + url, url)
     linebreak()
   }
@@ -126,11 +126,20 @@
   desc,
   date,
   box(place(right + bottom,
-    move(dx: -.25em, dy: .1em,
-      image(width: .8em, "icons/github.svg"))))
+    move(dx: -.25em, dy: .05em,
+      image(width: .9em, "icons/github.svg"))))
   + link("https://github.com/" + url, url_desc),
   body
 )
+
+#let pr_list(repo_name, repo_link, pull_ids) = box(list(body-indent: 0.75em, {
+  link(repo_link, text(weight: "regular", repo_name))
+  set text(0.75em, tracking: -0.25pt)
+  pull_ids.enumerate().map(it => " " + link(
+    if (type(it.at(1)) == int) { repo_link + "/pull/" + str(it.at(1)) } else { it.at(1) },
+    "[" + str(it.at(0) + 1) + "]")
+  ).join()
+}))
 
 #let mono = text.with(
   0.95em,
