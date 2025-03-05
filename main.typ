@@ -66,9 +66,8 @@
 ]
 
 #item(
-  [AWS Educate Cloud Ambassador, AWS Certified, \
-    Nominated for AWS Community Builder],
-  "Advocating cloud computing through my lens of personal projects.",
+  [AWS Community Builder, AWS Educate Cloud Ambassador and AWS Certified],
+  "Advocating cloud computing through the lens of personal projects.",
   "January 2025",
   context box(height: measure("").height,
     move(dy: 1pt, align(bottom, image(height: 0.9em, "icons/linkedin.svg"))))
@@ -76,8 +75,7 @@
   + link("https://www.linkedin.com/in/usertam/details/certifications", "LinkedIn")
 )[
   - AWS Certified SysOps Administrator – Associate (SOA-C02)
-  - AWS Certified Cloud Practitioner (CLF-C02)
-  - AWS Certified AI Practitioner (CLF-C01)
+  - AWS Certified Cloud Practitioner (CLF-C02) & AWS Certified AI Practitioner (CLF-C01)
 ]
 
 #experience[Projects]
