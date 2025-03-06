@@ -21,10 +21,10 @@
     NixOS/Nixpkgs Maintainer, _formerly Contributor_],
   "",
   "3 Years" + dot + "Since 2022",
-  "pulls?q=is%3Apr+author%3Ausertam",
-  url_desc: "Pull Requests"
+  "pulls?q=author%3Ausertam+is%3Amerged",
+  url_desc: "Merged PRs (30+)"
 )[
-  As contributor to recognized open source initiatives, I collaborate with many in the open-source software community to shape the very foundation of modern software stacks used by developers.
+  As contributor to recognized open source initiatives of 20k+ stars, I collaborate with many in the open-source software community to shape the very foundation of modern software stacks used by developers.
 
   #v(-.25em)
 
@@ -67,7 +67,7 @@
 ]
 
 #item(
-  [AWS Community Builder, AWS Educate Cloud Ambassador and AWS Certified],
+  [AWS Community Builder, AWS Educate Cloud Ambassador and 3#sym.times AWS Certified],
   "Advocating cloud computing through the lens of personal projects.",
   "January 2025",
   context box(height: measure("").height,
@@ -82,7 +82,7 @@
 #experience[Projects]
 
 #gh_item(
-  "LLVM Toolchain",
+  "LLVM Toolchain" + dot + "5 build stages in 8h+ build time",
   "Bleeding-edge LLVM toolchains for cross-compilation, optimized with PGO and LTO.",
   "June 2024",
   "usertam/toolchain"
@@ -91,7 +91,7 @@
 ]
 
 #gh_item(
-  ConTeXt + "-minimals",
+  ConTeXt + "-minimals" + dot + "200+ releases",
   "Typesetting system made reproducible.",
   "August 2022",
   "usertam/context-minimals"
@@ -100,7 +100,7 @@
 ]
 
 #gh_item(
-  "Android Kernel Development",
+  "Android Kernel Development" + dot + "1.6k+ commits ahead",
   ["What if you can run `dockerd` on your `aarch64` phone natively?"],
   "September 2021",
   "usertam/dumpling-lineage-kernel"
@@ -118,7 +118,7 @@
 )[
   - Advocate for students' interests and serve as a liaison between students and faculty administration.
   - Keynote Speaker of credit-bearing seminars #link("https://www.youtube.com/watch?v=53TWNe3_z38", `Developing with GitHub`) and #link("https://csess.su.hkust.edu.hk/activity/149", `The Unix Philosophy`).
-  - Co-host of the Departmental Briefing for Direct Entry Students in 2023, and again in 2024.
+  - Co-host of Departmental Briefing for all Direct Entry students in 2023, and again in 2024.
 ]
 
 #item(
@@ -128,7 +128,7 @@
   "July 2023 – Current",
   "Academic Building, Room 4202"
 )[
-  - Maintain all departmental lab and server infrastructure for undergraduates and postgraduates.
+  - Maintain all 10+ departmental labs and server infrastructure for undergraduates and postgraduates.
   - Serve as a liaison for professional and reliable inter-departmental communications.
 ]
 
@@ -139,7 +139,7 @@
   "Student Centre, Mailbox #3"
 )[
   - Oversee executive operations, provide strategic guidance and support to the student society.
-  - Principal Coordinator of CSE Festival 2023. Master of Ceremonies of CSE Farewell Dinner 2023.
+  - Principal Coordinator of CSE Festival. Master of Ceremonies of CSE Farewell Dinner. Both 100+ attendees.
 ]
 
 #experience[Education]
