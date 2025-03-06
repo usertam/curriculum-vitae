@@ -1,41 +1,25 @@
 #let project(
   title: none,
-  author: (name: none, email: none, email-alt: none, bio: none),
+  author: (name: none, handle: none, email: none),
   bio: none,
   links: (),
   body,
 ) = {
   // Set the document's basic properties.
-  set document(title: title, author: author.name)
+  set document(title: title, author: author.name, description: bio.split(".").at(0), keywords: author.values())
   set page(paper: "a4", margin: (x: 1in, y: 0.75in))
   set par(justify: true, leading: .55em)
   set text(9pt, font: "Mona Sans", weight: "regular", fallback: false)
   set underline(stroke: .2pt)
+  show link: underline
 
-  // Set mono text style.
-  let mono = text.with(
-    .9em,
-    font: "DM Mono",
-    weight: "light",
-    tracking: -.25pt
-  )
-
-  // Handle.
+  // Handle style.
   let handle = box.with(
     fill: luma(240),
     inset: (x: 3pt, y: 1pt),
     outset: (y: 2pt),
     radius: 2pt,
   )
-
-  // Website links.
-  let website(icon, url) = {
-    context box(height: measure("").height,
-      move(dx: -.25em, dy: .1em,
-        align(bottom, image(height: 0.9em, icon))))
-    link("https://" + url, url)
-    linebreak()
-  }
 
   v(1fr)
 
@@ -48,36 +32,49 @@
       author.name
     )
     h(.5em)
-    handle(mono("@usertam"))
+    text(1.1em, handle(raw("@" + author.handle)))
     linebreak()
     v(.875em, weak: true)
-    text(tracking: 0.15pt, author.bio)
+    text(tracking: 0.15pt, bio)
     linebreak()
-    v(1.25em, weak: true)
-    text(bio)
+
     v(.5em)
 
     colbreak()
     set align(right)
-    show text: mono
-    show link: underline
+    set text(0.85em, tracking: .2pt)
+
+    v(.25em)
 
     // Email link.
     context box(height: measure("").height,
-      move(dy: -1.5pt, align(bottom, text(1.1em, font: "Twitter Color Emoji", fallback: true, "✉️"))))
-    h(0.15em)
-    link(
-      "mailto:" + author.email
-    )
+      move(dy: -2.25pt,
+        text(font: "Twitter Color Emoji", "✉️")))
+    link("mailto:" + author.email)
     linebreak()
 
-    // All website links.
-    links.map(it => website(..it)).join()
+    // All social links.
+    links.map(it => {
+      let (name, url) = it
+      context box(height: measure("").height,
+        move(dx: -.25em, dy: -.125em,
+          image(height: 1em,
+            "icons/" + name + ".svg")))
+        link("https://" + url, url)
+      linebreak()
+    }).join()
   })
 
   v(1em, weak: true)
 
-  show link: underline
+  // Set monospace style.
+  show raw: text.with(
+    1.2em,
+    font: "DM Mono",
+    weight: "light",
+    tracking: -.35pt
+  )
+
   body
 
   v(1fr)
@@ -125,9 +122,9 @@
   smallcaps(title),
   desc,
   date,
-  box(place(right + bottom,
-    move(dx: -.25em, dy: .05em,
-      image(width: .9em, "icons/github.svg"))))
+  context box(height: measure("").height,
+    move(dx: -.25em, dy: -.125em,
+      image(height: .9em, "icons/github.svg")))
   + link("https://github.com/" + url, url_desc),
   body
 )
@@ -141,29 +138,8 @@
   ).join()
 }))
 
-#let mono = text.with(
-  0.95em,
-  font: "DM Mono",
-  weight: "light",
-  tracking: -.35pt
-)
-
-#let github(url) = {
-  mono(link("https://github.com/" + url, url))
-}
-
 #let dot = {
-  h(.4em) + box(place(center + bottom, $dot$)) + h(.4em)
-}
-
-#let course(sem, courses, extra: none) = {
-  smallcaps(text(weight: "semibold", sem))
-  courses.fold("", (x, y) => x + dot + y)
-  if (extra != none) {
-    dot
-    smallcaps(text(weight: "semibold", extra.at(0)))
-    extra.at(1).fold("", (x, y) => x + dot + y)
-  }
+  h(.275em) + sym.dot.c + h(.275em)
 }
 
 #let TeX = {

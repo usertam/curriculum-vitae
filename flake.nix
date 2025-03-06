@@ -1,4 +1,6 @@
 {
+  description = "A flake for making usertam's curriculum vitae";
+
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   inputs.systems.url = "github:nix-systems/default";
 
@@ -12,7 +14,7 @@
         dm-mono = pkgs.callPackage ./fonts/dm-mono {};
       };
       default = pkgs.stdenvNoCC.mkDerivation (final: {
-        name = "resume";
+        name = "curriculum-vitae";
         src = self;
 
         nativeBuildInputs = with pkgs; [
@@ -29,6 +31,10 @@
           + ":${fonts.twitter-color-emoji}/share/fonts/truetype";
 
         buildPhase = ''
+          echo 'Building ${final.meta.repo} with Typst ${pkgs.typst.version}'
+          echo 'Setting SOURCE_DATE_EPOCH to ${toString self.lastModified}'
+          export SOURCE_DATE_EPOCH=${toString self.lastModified}
+
           echo "Build stage 1: compile typst source"
           typst compile $src/main.typ build-stage-1.pdf
 
@@ -45,8 +51,11 @@
             -dNumRenderingThreads=$NIX_BUILD_CORES \
             -f build-stage-1.pdf
 
-          echo "Build stage 3: remove specific metadata with exiftool"
-          exiftool -producer= -documentid= -verbose build-stage-2.pdf -o build-stage-3.pdf
+          echo "Build stage 3: make metadata with exiftool"
+          exiftool \
+            -producer='${final.meta.repo}' \
+            -alldates="$(date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')" \
+            -documentid= -verbose build-stage-2.pdf -o build-stage-3.pdf
 
           echo "Build stage 4: linearize with qpdf"
           qpdf --deterministic-id --linearize --newline-before-endstream --verbose \
@@ -56,6 +65,13 @@
         installPhase = ''
           install -Dm444 build-stage-4.pdf "$out/${final.name}.pdf"
         '';
+
+        meta = with pkgs.lib; {
+          homepage = "https://github.com/usertam/${final.name}";
+          repo = "usertam/${final.name}";
+          platforms = platforms.all;
+          maintainers = with maintainers; [ usertam ];
+        };
       });
     });
   };

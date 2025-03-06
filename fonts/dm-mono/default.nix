@@ -16,19 +16,14 @@ stdenvNoCC.mkDerivation {
     install -Dt $out/share/fonts/truetype $src/exports/*.ttf
     runHook postInstall
   '';
-  meta = {
+  meta = with lib; {
     description = ''
       A three weight, three style family. Loosely based off of DM Sans,
       with a reduction in contrast and less geometric proportions.
     '';
     homepage = "https://github.com/googlefonts/dm-mono";
-    license = lib.licenses.ofl;
-    platforms = lib.platforms.all;
-    maintainers = lib.singleton {
-      email = "heiyiutam@gmail.com";
-      github = "usertam";
-      githubId = 22500027;
-      name = "usertam";
-    };
+    license = licenses.ofl;
+    platforms = platforms.all;
+    maintainers = with maintainers; [ usertam ];
   };
 }

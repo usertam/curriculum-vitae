@@ -18,16 +18,11 @@ stdenvNoCC.mkDerivation (final: {
     install -Dt $out/share/fonts/opentype $src/"2. OpenType Files"/*.otf
     runHook postInstall
   '';
-  meta = {
+  meta = with lib; {
     description = "A free display type family, inspired by Garamont";
     homepage = "https://github.com/CatharsisFonts/Cormorant";
-    license = lib.licenses.ofl;
-    platforms = lib.platforms.all;
-    maintainers = lib.singleton {
-      email = "heiyiutam@gmail.com";
-      github = "usertam";
-      githubId = 22500027;
-      name = "usertam";
-    };
+    license = licenses.ofl;
+    platforms = platforms.all;
+    maintainers = with maintainers; [ usertam ];
   };
 })

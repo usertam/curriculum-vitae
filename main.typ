@@ -1,15 +1,16 @@
 #import "template.typ": *
 
 #show: project.with(
-  title: "Résumé",
+  title: "Curriculum Vitae",
   author: (
     name: "Samuel Tam",
+    handle: "usertam",
     email: "hello@usertam.dev",
-    bio: [Open-Source Software Developer. Final Year at HKUST.],
   ),
+  bio: "Open-Source Software Developer. Final Year at HKUST.",
   links: (
-    ("icons/linkedin.svg", "linkedin.com/in/usertam"),
-    ("icons/github.svg", "github.com/usertam"),
+    ("linkedin", "linkedin.com/in/usertam"),
+    ("github", "github.com/usertam"),
   ),
 )
 
@@ -19,7 +20,7 @@
   [Open-Source Software Developer, \
     NixOS/Nixpkgs Maintainer, _formerly Contributor_],
   "",
-  "3 Years" + h(.275em) + sym.dot.c + h(.275em) + "Since 2022",
+  "3 Years" + dot + "Since 2022",
   "pulls?q=is%3Apr+author%3Ausertam",
   url_desc: "Pull Requests"
 )[
@@ -70,8 +71,8 @@
   "Advocating cloud computing through the lens of personal projects.",
   "January 2025",
   context box(height: measure("").height,
-    move(dy: 1pt, align(bottom, image(height: 0.9em, "icons/linkedin.svg"))))
-  + h(0.35em)
+    move(dx: -.25em, dy: -.07em,
+      image(height: .9em, "icons/linkedin.svg")))
   + link("https://www.linkedin.com/in/usertam/details/certifications", "LinkedIn")
 )[
   - AWS Certified SysOps Administrator – Associate (SOA-C02)
@@ -86,7 +87,7 @@
   "June 2024",
   "usertam/toolchain"
 )[
-  Leveraging GitHub Actions with scheduled scripts, we can perform weekly builds against the LLVM #link("https://github.com/llvm/llvm-project", mono[master]). The build is then optimized, stripped and patched for portability across different environments.
+  Leveraging GitHub Actions with scheduled scripts, we can perform weekly builds against the LLVM #link("https://github.com/llvm/llvm-project", `master`). The build is then optimized, stripped and patched for portability across different environments.
 ]
 
 #gh_item(
@@ -95,12 +96,12 @@
   "August 2022",
   "usertam/context-minimals"
 )[
-  After analyzing the dependencies of #ConTeXt LMTX (like #LaTeX, derived from #TeX), we rewrite the installation declaratively in #mono[nix]. This results in a far more efficient installation that is both reproducible and portable.
+  After analyzing the dependencies of #ConTeXt LMTX (like #LaTeX, derived from #TeX), we rewrite the installation declaratively in `nix`. This results in a far more efficient installation that is both reproducible and portable.
 ]
 
 #gh_item(
   "Android Kernel Development",
-  ["What if you can run #mono[dockerd] on your #mono[aarch64] phone natively?"],
+  ["What if you can run `dockerd` on your `aarch64` phone natively?"],
   "September 2021",
   "usertam/dumpling-lineage-kernel"
 )[
@@ -111,11 +112,12 @@
 
 #item(
   "Department of Computer Science and Engineering, HKUST",
-  "Undergraduate Student Representative",
+  "Undergraduate Representative",
   "September 2023 – Current",
   "Academic Building, Room 3528"
 )[
-  - Keynote Speaker of credit-bearing seminars #link("https://www.youtube.com/watch?v=53TWNe3_z38", mono[Developing with GitHub]) and #link("https://csess.su.hkust.edu.hk/activity/149", mono[The Unix Philosophy]).
+  - Advocate for students' interests and serve as a liaison between students and faculty administration.
+  - Keynote Speaker of credit-bearing seminars #link("https://www.youtube.com/watch?v=53TWNe3_z38", `Developing with GitHub`) and #link("https://csess.su.hkust.edu.hk/activity/149", `The Unix Philosophy`).
   - Co-host of the Departmental Briefing for Direct Entry Students in 2023, and again in 2024.
 ]
 
@@ -136,8 +138,8 @@
   "April 2023 – Current",
   "Student Centre, Mailbox #3"
 )[
-  - Principal Coordinator of CSE Festival 2023. Master of Ceremonies of CSE Farewell Dinner 2023.
   - Oversee executive operations, provide strategic guidance and support to the student society.
+  - Principal Coordinator of CSE Festival 2023. Master of Ceremonies of CSE Farewell Dinner 2023.
 ]
 
 #experience[Education]

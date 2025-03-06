@@ -1,4 +1,4 @@
-name: "Build PDFs"
+name: "Build PDF"
 on:
   workflow_dispatch:
   push:
@@ -10,13 +10,12 @@ permissions:
   contents: write
 jobs:
   build:
-    name: Build PDFs
+    name: Build PDF
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
     - uses: DeterminateSystems/nix-installer-action@main
-    - uses: DeterminateSystems/magic-nix-cache-action@main
-    - name: Build PDFs
+    - name: Build PDF
       run: |
         nix build --print-build-logs --print-out-paths
         if ! nix build --rebuild --keep-failed; then
