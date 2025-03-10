@@ -7,7 +7,7 @@
     handle: "usertam",
     email: "hello@usertam.dev",
   ),
-  bio: "Open-Source Software Developer. Final Year at HKUST.",
+  bio: "Persuing Dev/SysOps & Linux Development. Final Year at HKUST.",
   links: (
     ("linkedin", "linkedin.com/in/usertam"),
     ("github", "github.com/usertam"),
@@ -22,13 +22,13 @@
   "",
   "3 Years" + dot + "Since 2022",
   "pulls?q=author%3Ausertam+is%3Amerged",
-  url_desc: "Merged PRs (30+)"
+  repo_desc: "Merged PRs (30+)"
 )[
   As contributor to recognized open source initiatives of 20k+ stars, I collaborate with many in the open-source software community to shape the very foundation of modern software stacks used by developers.
 
   #v(-.25em)
 
-  #columns(2, gutter: 1em, text(0.9em, font: "DM Mono", weight: "light", tracking: -0.2pt, {
+  #pr_col({
     pr_list(
       "NixOS/Nixpkgs",
       "https://github.com/NixOS/nixpkgs", (
@@ -63,7 +63,7 @@
         415,
       )
     )
-  }))
+  })
 ]
 
 #item(
@@ -111,8 +111,8 @@
 #experience[Experience]
 
 #item(
-  "Department of Computer Science and Engineering, HKUST",
   "Undergraduate Representative",
+  "Department of Computer Science and Engineering, HKUST",
   "September 2023 – Current",
   "Academic Building, Room 3528"
 )[
@@ -122,9 +122,8 @@
 ]
 
 #item(
-  [System and Network Administration Office, \
-    Department of Computer Science and Engineering, HKUST],
   "Student Intern",
+  "System and Network Administration Office, Dept. of CSE, HKUST",
   "July 2023 – Current",
   "Academic Building, Room 4202"
 )[
@@ -133,8 +132,8 @@
 ]
 
 #item(
+  [Honorary Advisor, _formerly Executive Committee_],
   "The Computer Science and Engineering Students' Society, HKUSTSU",
-  "Honorary Advisor, formerly Executive Committee",
   "April 2023 – Current",
   "Student Centre, Mailbox #3"
 )[
@@ -149,13 +148,13 @@
   "Final Year, Bachelor of Engineering in Computer Engineering",
   "July 2026",
   "Clear Water Bay, Kowloon",
-  (
+  text(tracking: -.05pt, (
     "Advanced Deep Learning Architectures",
-    "Cybersecurity",
     "Competitive Programming in Cybersecurity II",
     "Design and Analysis of Algorithms",
+    "Modern Compiler Construction",
     "Honors Object-Oriented Programming and Data Structures",
-  ).join(dot)
+  ).join(dot))
 )
 
 #item(

@@ -7,7 +7,7 @@
 ) = {
   // Set the document's basic properties.
   set document(title: title, author: author.name, description: bio.split(".").at(0), keywords: author.values())
-  set page(paper: "a4", margin: (x: 1in, y: 0.75in))
+  set page(paper: "a4", margin: (x: 1in, y: .75in))
   set par(justify: true, leading: .55em)
   set text(9pt, font: "Mona Sans", weight: "regular", fallback: false)
   set underline(stroke: .2pt)
@@ -28,21 +28,21 @@
     text(1.5em,
       weight: "semibold",
       features: (smcp: 1),
-      tracking: 0.25pt,
+      tracking: .25pt,
       author.name
     )
     h(.5em)
     text(1.1em, handle(raw("@" + author.handle)))
     linebreak()
     v(.875em, weak: true)
-    text(tracking: 0.15pt, bio)
+    text(tracking: .15pt, bio)
     linebreak()
 
     v(.5em)
 
     colbreak()
     set align(right)
-    set text(0.85em, tracking: .2pt)
+    set text(.85em, tracking: .2pt)
 
     v(.25em)
 
@@ -92,8 +92,8 @@
   box(
     height: measure("").height,
     align(right + horizon,
-      line(stroke: 0.1pt,
-        end: (100% - 0.75em - measure(title).width, 0%)
+      line(stroke: .1pt,
+        end: (100% - .75em - measure(title).width, 0%)
       )
     )
   )
@@ -118,20 +118,24 @@
   )
 })
 
-#let gh_item(title, desc, date, url, url_desc: "Repository", body) = item(
-  smallcaps(title),
-  desc,
+#let gh_item(title, subtitle, date, repo, repo_desc: "Repository", body) = item(
+  title,
+  subtitle,
   date,
   context box(height: measure("").height,
     move(dx: -.25em, dy: -.125em,
       image(height: .9em, "icons/github.svg")))
-  + link("https://github.com/" + url, url_desc),
+  + link("https://github.com/" + repo, repo_desc),
   body
 )
 
-#let pr_list(repo_name, repo_link, pull_ids) = box(list(body-indent: 0.75em, {
+#let pr_col(body) = columns(2, gutter: 1em,
+  text(.9em, font: "DM Mono", weight: "light", tracking: -.2pt, body)
+)
+
+#let pr_list(repo_name, repo_link, pull_ids) = box(list(body-indent: .5em, {
   link(repo_link, text(weight: "regular", repo_name))
-  set text(0.75em, tracking: -0.25pt)
+  set text(.75em, tracking: -.25pt)
   pull_ids.enumerate().map(it => " " + link(
     if (type(it.at(1)) == int) { repo_link + "/pull/" + str(it.at(1)) } else { it.at(1) },
     "[" + str(it.at(0) + 1) + "]")
