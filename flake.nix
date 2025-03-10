@@ -14,8 +14,9 @@
         dm-mono = pkgs.callPackage ./fonts/dm-mono {};
       };
       default = pkgs.stdenvNoCC.mkDerivation (final: {
-        name = "curriculum-vitae";
-        src = self;
+        pname = "curriculum-vitae";
+        src = pkgs.lib.sourceFilesBySuffices self [ ".typ" ".svg" ];
+        version = (self.shortRev or self.dirtyShortRev);
 
         nativeBuildInputs = with pkgs; [
           typst
@@ -30,11 +31,12 @@
           + ":${fonts.dm-mono}/share/fonts/truetype"
           + ":${fonts.twitter-color-emoji}/share/fonts/truetype";
 
-        buildPhase = ''
-          echo 'Building ${final.meta.repo} with Typst ${pkgs.typst.version}'
-          echo 'Setting SOURCE_DATE_EPOCH to ${toString self.lastModified}'
+        configurePhase = ''
+          echo 'Building ${final.meta.repo} (${final.version}) with Typst ${pkgs.typst.version}'
           export SOURCE_DATE_EPOCH=${toString self.lastModified}
+        '';
 
+        buildPhase = ''
           echo "Build stage 1: compile typst source"
           typst compile $src/main.typ build-stage-1.pdf
 
@@ -53,7 +55,7 @@
 
           echo "Build stage 3: make metadata with exiftool"
           exiftool \
-            -producer='${final.meta.repo}' \
+            -producer='${final.meta.repo} (${final.version})' \
             -alldates="$(date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')" \
             -documentid= -verbose build-stage-2.pdf -o build-stage-3.pdf
 
@@ -63,15 +65,16 @@
         '';
 
         installPhase = ''
-          install -Dm444 build-stage-4.pdf "$out/${final.name}.pdf"
+          install -Dm444 build-stage-4.pdf "$out/${final.pname}.pdf"
         '';
 
-        meta = with pkgs.lib; {
-          homepage = "https://github.com/usertam/${final.name}";
-          repo = "usertam/${final.name}";
+        meta = rec {
+          homepage = "https://github.com/${repo}";
+          repo = "usertam/${final.pname}";
+        } // (with pkgs.lib; {
           platforms = platforms.all;
           maintainers = with maintainers; [ usertam ];
-        };
+        });
       });
     });
   };
