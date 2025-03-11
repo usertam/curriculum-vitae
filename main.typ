@@ -7,7 +7,7 @@
     handle: "usertam",
     email: "hello@usertam.dev",
   ),
-  bio: "Persuing Dev/SysOps & Linux Development. Final Year at HKUST.",
+  bio: "Pursuing Dev/SysOps & Linux Development. Final Year at HKUST.",
   links: (
     ("linkedin", "linkedin.com/in/usertam"),
     ("github", "github.com/usertam"),
