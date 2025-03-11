@@ -3,23 +3,52 @@
   author: (name: none, handle: none, email: none),
   bio: none,
   links: (),
+  repo: none,
+  permalink: none,
   body,
 ) = {
-  // Set the document's basic properties.
+  // Set document properties and style.
   set document(title: title, author: author.name, description: bio.split(".").at(0), keywords: author.values())
   set page(paper: "a4", margin: (x: 1in, y: .75in))
   set par(justify: true, leading: .55em)
   set text(9pt, font: "Mona Sans", weight: "regular", fallback: false)
   set underline(stroke: .2pt)
-  show link: underline
 
   // Handle style.
-  let handle = box.with(
+  let handle(height: none, body) = context box(
     fill: luma(240),
-    inset: (x: 3pt, y: 1pt),
-    outset: (y: 2pt),
-    radius: 2pt,
+    inset: (x: .3em, y: if height != none { height } else {
+      (measure("0").height - measure(raw("0")).height)/2
+    }),
+    outset: (y: .2em),
+    radius: .2em,
+    raw(body)
   )
+
+  // Footer style.
+  set page(footer-descent: 0em, footer: columns(2, {
+    set align(left)
+    set text(.75em, luma(75), tracking: .1pt, weight: "medium")
+
+    show "Mona Sans": link("https://github.com/github/mona-sans", "Mona Sans")
+    show "Typst": link("https://github.com/typst/typst", "Typst")
+
+    [#sym.copyright 2025 #author.name. Typeset in 9pt Mona Sans with Typst.]
+    linebreak()
+    "Permalink: " + underline(link(permalink))
+    if "rev" in sys.inputs {
+      h(.35em) + sym.dot.c + h(.35em)
+      "Rev. " + link(repo + "/commit/" + sys.inputs.rev,
+        handle(sys.inputs.rev))
+    }
+    colbreak()
+
+    set align(right)
+    linebreak()
+    link(repo, title)
+    h(.45em) + sym.dot.c + h(.45em)
+    strong(delta: 100, context counter(page).display())
+  }))
 
   v(1fr)
 
@@ -32,7 +61,7 @@
       author.name
     )
     h(.5em)
-    text(1.1em, handle(raw("@" + author.handle)))
+    text(1.1em, handle(height: 0.1em, "@" + author.handle))
     linebreak()
     v(.875em, weak: true)
     text(tracking: .15pt, bio)
@@ -43,13 +72,19 @@
     colbreak()
     set align(right)
     set text(.85em, tracking: .2pt)
+    show link: underline
 
     v(.25em)
 
     // Email link.
-    context box(height: measure("").height,
-      move(dy: -2.25pt,
-        text(font: "Twitter Color Emoji", "✉️")))
+    if "rev" in sys.inputs {
+      // Only fix in nixpkgs, with revisions enabled.
+      context box(height: measure("").height,
+        move(dy: -2.25pt,
+          text(font: "Twitter Color Emoji", "✉️")))
+    } else {
+      text(font: "Twitter Color Emoji", "✉️") + " "
+    }
     link("mailto:" + author.email)
     linebreak()
 
@@ -67,7 +102,8 @@
 
   v(1em, weak: true)
 
-  // Set monospace style.
+  // Set body style.
+  show link: underline
   show raw: text.with(
     1.2em,
     font: "DM Mono",
@@ -143,7 +179,7 @@
 }))
 
 #let dot = {
-  h(.275em) + sym.dot.c + h(.275em)
+  h(.35em) + sym.dot.c + h(.35em)
 }
 
 #let TeX = {

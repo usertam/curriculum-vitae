@@ -38,7 +38,8 @@
 
         buildPhase = ''
           echo "Build stage 1: compile typst source"
-          typst compile $src/main.typ build-stage-1.pdf
+          typst compile --input rev="${final.version}" \
+            $src/main.typ build-stage-1.pdf
 
           echo "Build stage 2: convert to PDF/A-2b with ghostscript"
           gs -o build-stage-2.pdf \

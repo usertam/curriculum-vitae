@@ -12,6 +12,8 @@
     ("linkedin", "linkedin.com/in/usertam"),
     ("github", "github.com/usertam"),
   ),
+  repo: "https://github.com/usertam/curriculum-vitae",
+  permalink: "https://usertam.link/cv",
 )
 
 #experience[Development]
@@ -127,7 +129,7 @@
   "July 2023 – Current",
   "Academic Building, Room 4202"
 )[
-  - Maintain all 10+ departmental labs and server infrastructure for undergraduates and postgraduates.
+  - Maintain \~10 departmental labs and server rooms for undergraduates and postgraduates.
   - Serve as a liaison for professional and reliable inter-departmental communications.
 ]
 
