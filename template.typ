@@ -4,7 +4,7 @@
   bio: none,
   links: (),
   repo: none,
-  permalink: none,
+  perma: none,
   body,
 ) = {
   // Set document properties and style.
@@ -35,18 +35,21 @@
 
     [#sym.copyright 2025 #author.name. Typeset in 9pt Mona Sans with Typst.]
     linebreak()
-    "Permalink: " + underline(link(permalink))
     if "rev" in sys.inputs {
-      h(.35em) + sym.dot.c + h(.35em)
-      "Rev. " + link(repo + "/commit/" + sys.inputs.rev,
-        handle(sys.inputs.rev))
+      "Permalink: " + underline(link(perma + "/" + sys.inputs.rev))
+    } else {
+      "Latest: " + underline(link(perma))
     }
     colbreak()
 
     set align(right)
     linebreak()
     link(repo, title)
-    h(.45em) + sym.dot.c + h(.45em)
+    if "rev" in sys.inputs {
+      h(.4em) + sym.dot.c + h(.4em)
+      link(repo + "/commit/" + sys.inputs.rev, handle(sys.inputs.rev))
+    }
+    h(.55em) + sym.dot.c + h(.55em)
     strong(delta: 100, context counter(page).display())
   }))
 

@@ -13,7 +13,7 @@
     ("github", "github.com/usertam"),
   ),
   repo: "https://github.com/usertam/curriculum-vitae",
-  permalink: "https://usertam.link/cv",
+  perma: "https://usertam.link/cv",
 )
 
 #experience[Development]
