@@ -20,7 +20,6 @@
 
         nativeBuildInputs = with pkgs; [
           typst
-          ghostscript
           exiftool
           qpdf
         ] ++ builtins.attrValues fonts;
@@ -38,35 +37,22 @@
 
         buildPhase = ''
           echo "Build stage 1: compile typst source"
-          typst compile --input rev="${final.version}" \
+          typst compile --pdf-standard a-2b --input rev="${final.version}" \
             $src/main.typ build-stage-1.pdf
 
-          echo "Build stage 2: convert to PDF/A-2b with ghostscript"
-          gs -o build-stage-2.pdf \
-            -dBATCH -dNOPAUSE -dNOOUTERSAVE \
-            -dPDFA=2 \
-            -dPDFSETTINGS=/prepress \
-            -dPDFACompatibilityPolicy=2 \
-            -sDEVICE=pdfwrite \
-            -sDocumentUUID=00000000-0000-0000-0000-000000000000 \
-            -sInstanceUUID=00000000-0000-0000-0000-000000000000 \
-            -dOmitInfoDate=true -dOmitID=true \
-            -dNumRenderingThreads=$NIX_BUILD_CORES \
-            -f build-stage-1.pdf
-
-          echo "Build stage 3: make metadata with exiftool"
+          echo "Build stage 2: make metadata with exiftool"
           exiftool \
-            -producer='${final.meta.repo} (${final.version})' \
+            -{creator,creatortool,producer}='${final.meta.repo} (${final.version})' \
             -alldates="$(date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')" \
-            -documentid= -verbose build-stage-2.pdf -o build-stage-3.pdf
+            -verbose build-stage-1.pdf -o build-stage-2.pdf
 
-          echo "Build stage 4: linearize with qpdf"
+          echo "Build stage 3: linearize with qpdf"
           qpdf --deterministic-id --linearize --newline-before-endstream --verbose \
-            build-stage-3.pdf build-stage-4.pdf
+            build-stage-2.pdf build-stage-3.pdf
         '';
 
         installPhase = ''
-          install -Dm444 build-stage-4.pdf "$out/${final.pname}.pdf"
+          install -Dm444 build-stage-3.pdf "$out/${final.pname}.pdf"
         '';
 
         meta = rec {

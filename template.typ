@@ -9,7 +9,7 @@
 ) = {
   // Set document properties and style.
   set document(title: title, author: author.name, description: bio.split(".").at(0), keywords: author.values())
-  set page(paper: "a4", margin: (x: 1in, y: .75in))
+  set page(paper: "a4", margin: 1in)
   set par(justify: true, leading: .55em)
   set text(9pt, font: "Mona Sans", weight: "regular", fallback: false)
   set underline(stroke: .2pt)
@@ -26,7 +26,7 @@
   )
 
   // Footer style.
-  set page(footer-descent: 0em, footer: columns(2, {
+  set page(footer: columns(2, {
     set align(left)
     set text(.75em, luma(75), tracking: .1pt, weight: "medium")
 
