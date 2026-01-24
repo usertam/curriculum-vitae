@@ -1,6 +1,6 @@
 #let project(
   title: none,
-  author: (name: none, handle: none, email: none),
+  author: (name: none, handle: none, email: none, website: none),
   bio: none,
   links: (),
   repo: none,
@@ -12,6 +12,7 @@
   set page(paper: "a4", margin: 1in)
   set par(justify: true, leading: .55em)
   set text(9pt, font: "Mona Sans", weight: "regular", fallback: false)
+  show raw: text.with(font: "DM Mono")
   set underline(stroke: .2pt)
 
   // Handle style.
@@ -33,22 +34,30 @@
     show "Mona Sans": link("https://github.com/github/mona-sans", "Mona Sans")
     show "Typst": link("https://github.com/typst/typst", "Typst")
 
-    [#sym.copyright 2025 #author.name. Typeset in 9pt Mona Sans with Typst.]
-    linebreak()
-    if "rev" in sys.inputs {
-      "Permalink: " + underline(link(perma + "/" + sys.inputs.rev))
+    let label = if "rev" in sys.inputs {
+      if "dirty" not in sys.inputs.rev {
+        link(
+          perma + "/" + sys.inputs.rev,
+          handle(datetime.today().display("[year]-[month]-[day]") + " (" + sys.inputs.rev + ")")
+        )
+      } else {
+        handle("20xx-xx-xx (" + sys.inputs.rev + ")")
+      }
     } else {
-      "Latest: " + underline(link(perma))
+      handle("20xx-xx-xx (preview)")
     }
+
+    [
+      #sym.copyright 2026 #author.name
+      #h(.2em) #sym.dot.c #h(.2em) #label \
+      Typeset in 9pt Mona Sans with Typst.
+    ]
+
     colbreak()
 
     set align(right)
     linebreak()
-    link(repo, title)
-    if "rev" in sys.inputs {
-      h(.4em) + sym.dot.c + h(.4em)
-      link(repo + "/commit/" + sys.inputs.rev, handle(sys.inputs.rev))
-    }
+    title
     h(.55em) + sym.dot.c + h(.55em)
     strong(delta: 100, context counter(page).display())
   }))
@@ -56,7 +65,7 @@
   v(1fr)
 
   // Header with name, description and links.
-  columns(2, gutter: -100%, {
+  grid(align: bottom, columns: 2, {
     text(1.5em,
       weight: "semibold",
       features: (smcp: 1),
@@ -68,51 +77,20 @@
     linebreak()
     v(.875em, weak: true)
     text(tracking: .15pt, bio)
-    linebreak()
-
-    v(.5em)
-
-    colbreak()
+    h(1fr)
+  }, {
     set align(right)
-    set text(.85em, tracking: .2pt)
     show link: underline
-
-    v(.25em)
-
-    // Email link.
-    if "rev" in sys.inputs {
-      // Only fix in nixpkgs, with revisions enabled.
-      context box(height: measure("").height,
-        move(dy: -2.25pt,
-          text(font: "Twitter Color Emoji", "✉️")))
-    } else {
-      text(font: "Twitter Color Emoji", "✉️") + " "
-    }
-    link("mailto:" + author.email)
+    text(font: "Twitter Color Emoji", "🌏") + " " + link(author.website)
     linebreak()
-
-    // All social links.
-    links.map(it => {
-      let (name, url) = it
-      context box(height: measure("").height,
-        move(dx: -.25em, dy: -.125em,
-          image(height: 1em,
-            "icons/" + name + ".svg")))
-        link("https://" + url, url)
-      linebreak()
-    }).join()
+    text(font: "Twitter Color Emoji", "📨") + " " + link("mailto:" + author.email, author.email)
   })
 
-  v(1em, weak: true)
+  v(1.5em, weak: true)
 
   // Set body style.
   show link: underline
-  show raw: text.with(
-    1.2em,
-    font: "DM Mono",
-    weight: "light",
-    tracking: -.35pt
-  )
+  show raw: text.with(1.2em, tracking: -.25pt, weight: "light")
 
   body
 
@@ -167,19 +145,6 @@
   + link("https://github.com/" + repo, repo_desc),
   body
 )
-
-#let pr_col(body) = columns(2, gutter: 1em,
-  text(.9em, font: "DM Mono", weight: "light", tracking: -.2pt, body)
-)
-
-#let pr_list(repo_name, repo_link, pull_ids) = box(list(body-indent: .5em, {
-  link(repo_link, text(weight: "regular", repo_name))
-  set text(.75em, tracking: -.25pt)
-  pull_ids.enumerate().map(it => " " + link(
-    if (type(it.at(1)) == int) { repo_link + "/pull/" + str(it.at(1)) } else { it.at(1) },
-    "[" + str(it.at(0) + 1) + "]")
-  ).join()
-}))
 
 #let dot = {
   h(.35em) + sym.dot.c + h(.35em)
