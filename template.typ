@@ -29,7 +29,7 @@
   // Footer style.
   set page(footer: columns(2, {
     set align(left)
-    set text(.75em, luma(75), tracking: .1pt, weight: "medium")
+    set text(.75em, luma(64), tracking: .05pt, weight: "medium")
 
     show "Mona Sans": link("https://github.com/github/mona-sans", "Mona Sans")
     show "Typst": link("https://github.com/typst/typst", "Typst")
@@ -62,7 +62,9 @@
     strong(delta: 100, context counter(page).display())
   }))
 
-  v(1fr)
+  // Fine header/footer adjustment.
+  set page(footer-descent: 0.625em)
+  v(.5fr)
 
   // Header with name, description and links.
   grid(align: bottom, columns: 2, {
@@ -76,11 +78,13 @@
     text(1.1em, handle(height: 0.1em, "@" + author.handle))
     linebreak()
     v(.875em, weak: true)
-    text(tracking: .15pt, bio)
+    text(tracking: .1pt, bio)
     h(1fr)
   }, {
     set align(right)
     show link: underline
+    set text(.9em, luma(64), tracking: .1pt, weight: "medium")
+
     text(font: "Twitter Color Emoji", "🌏") + " " + link(author.website)
     linebreak()
     text(font: "Twitter Color Emoji", "📨") + " " + link("mailto:" + author.email, author.email)
