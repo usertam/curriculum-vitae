@@ -15,6 +15,13 @@
   show raw: text.with(font: "DM Mono")
   set underline(stroke: .2pt)
 
+  // Set tracking for Mona Sans in nixpkgs.
+  show emph: if "rev" in sys.inputs {
+    text.with(tracking: .25pt)
+  } else {
+    text
+  }
+
   // Handle style.
   let handle(height: none, body) = context box(
     fill: luma(240),
@@ -30,6 +37,7 @@
   set page(footer: columns(2, {
     show "Mona Sans": link("https://github.com/github/mona-sans", "Mona Sans")
     show "Typst": link("https://github.com/typst/typst", "Typst")
+    show "Curriculum Vitae": "Curriculum Vitæ"
 
     let label = if "rev" in sys.inputs {
       if "dirty" not in sys.inputs.rev {
@@ -61,7 +69,7 @@
   }))
 
   // Fine header/footer adjustment.
-  set page(footer-descent: 0.625em)
+  set page(footer-descent: 0em)
   v(.5fr)
 
   // Header with name, description and links.
@@ -83,9 +91,15 @@
     show link: underline
     set text(.9em, luma(64), tracking: .1pt, weight: "medium")
 
-    text(font: "Twitter Color Emoji", "🌏") + " " + link(author.website)
+    let _emoji(e) = if "rev" in sys.inputs {
+      box(move(dy: -.5pt, text(.8em, font: "Twitter Color Emoji", top-edge: "bounds", e)))
+    } else {
+      box(move(dy: -.5pt, text(.9em, font: "Twitter Color Emoji", top-edge: "bounds", e)))
+    }
+
+    _emoji(emoji.globe.as.au) + " " + link(author.website)
     linebreak()
-    text(font: "Twitter Color Emoji", "📨") + " " + link("mailto:" + author.email, author.email)
+    _emoji(emoji.tray.mail) + " " + link("mailto:" + author.email, author.email)
   })
 
   v(1.5em, weak: true)
@@ -124,7 +138,7 @@
     box(inset: (left: 1em), {
       text(weight: "medium", title)
       linebreak()
-      text(style: "italic", subtitle)
+      emph(subtitle)
       v(-.25em)
       body
     })

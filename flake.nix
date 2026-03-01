@@ -1,5 +1,5 @@
 {
-  description = "A flake for making usertam's curriculum vitae";
+  description = "A flake for building curriculum vitae";
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   inputs.systems.url = "github:nix-systems/default";
@@ -8,30 +8,36 @@
     forAllSystems = with nixpkgs.lib; genAttrs (import systems);
     forAllPkgs = pkgsWith: forAllSystems (system: pkgsWith nixpkgs.legacyPackages.${system});
   in {
-    packages = forAllPkgs (pkgs: rec {
-      fonts = {
-        inherit (pkgs) mona-sans twitter-color-emoji;
-        dm-mono = pkgs.callPackage ./fonts/dm-mono {};
-      };
+    packages = forAllPkgs (pkgs: {
       default = pkgs.stdenvNoCC.mkDerivation (final: {
         pname = "curriculum-vitae";
         src = pkgs.lib.sourceFilesBySuffices self [ ".typ" ".svg" ];
         version = (self.shortRev or self.dirtyShortRev);
 
+        passthru.repo = "usertam/" + final.pname;
+
         nativeBuildInputs = with pkgs; [
           typst
           exiftool
           qpdf
-        ] ++ builtins.attrValues fonts;
+        ] ++ final.passthru.fonts;
 
-        enableParallelBuilding = true;
+        passthru.fonts = with pkgs; [
+          dm-mono
+          mona-sans
+          twitter-color-emoji
+        ];
 
-        TYPST_FONT_PATHS = "${fonts.mona-sans}/share/fonts/opentype"
-          + ":${fonts.dm-mono}/share/fonts/truetype"
-          + ":${fonts.twitter-color-emoji}/share/fonts/truetype";
+        env.TYPST_FONT_PATHS =
+          builtins.concatStringsSep ":" (
+            builtins.concatMap (p: [
+              "${p}/share/fonts/opentype"
+              "${p}/share/fonts/truetype"
+            ]) final.passthru.fonts
+          );
 
         configurePhase = ''
-          echo 'Building ${final.meta.repo} (${final.version}) with Typst ${pkgs.typst.version}'
+          echo "Building ${final.passthru.repo} (${final.version}) with $(typst --version)"
           export SOURCE_DATE_EPOCH=${toString self.lastModified}
         '';
 
@@ -42,7 +48,7 @@
 
           echo "Build stage 2: make metadata with exiftool"
           exiftool \
-            -{creator,creatortool,producer}='${final.meta.repo} (${final.version})' \
+            -{creator,creatortool,producer}='${final.passthru.repo} (${final.version})' \
             -alldates="$(date -d "@$SOURCE_DATE_EPOCH" +'%Y-%m-%d %H:%M:%S')" \
             -verbose build-stage-1.pdf -o build-stage-2.pdf
 
@@ -55,13 +61,11 @@
           install -Dm444 build-stage-3.pdf "$out/${final.pname}.pdf"
         '';
 
-        meta = rec {
-          homepage = "https://github.com/${repo}";
-          repo = "usertam/${final.pname}";
-        } // (with pkgs.lib; {
-          platforms = platforms.all;
-          maintainers = with maintainers; [ usertam ];
-        });
+        meta = {
+          homepage = "https://github.com/${final.passthru.repo}";
+          platforms = pkgs.lib.platforms.all;
+          maintainers = with pkgs.lib.maintainers; [ usertam ];
+        };
       });
     });
   };
