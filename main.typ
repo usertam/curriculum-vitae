@@ -8,7 +8,7 @@
     email: "hello@usertam.dev",
     website: "https://usertam.dev",
   ),
-  bio: "Pursuing SysDevOps and Linux Development.",
+  bio: "High-performance networking and production systems.",
   links: (
     ("linkedin", "linkedin.com/in/usertam"),
     ("github", "github.com/usertam"),
@@ -17,44 +17,29 @@
   perma: "https://usertam.link/cv",
 )
 
-#experience[Development]
-
-#gh_item(
-  [Free and Open-Source Software Developer, \
-    NixOS/Nixpkgs Maintainer, _formerly Contributor_],
-  "",
-  [May 2022---Present],
-  "pulls?q=author%3Ausertam",
-  repo_desc: "All PRs"
-)[
-  - I contribute to productive projects well-used by developers worldwide, both personally and professionally.
-  - #link("https://www.youtube.com/watch?v=M4jS5KQ8_YE", "Presented") at _NixCon 2025_ about our roadmap for weaving Nix into private company workflows.
-]
-
-#item(
-  [AWS Community Builder with 3#sym.times AWS Certified, _formerly AWS Cloud Ambassador_],
-  "Advocating cloud computing through the lens of personal projects.",
-  "January 2025",
-  context box(height: measure("").height,
-    move(dx: -.25em, dy: -.07em,
-      image(height: .9em, "icons/linkedin.svg")))
-  + link("https://www.linkedin.com/in/usertam/details/certifications", "LinkedIn")
-)[
-  - AWS Certified SysOps Administrator – Associate (SOA-C02)
-  - AWS Certified Cloud Practitioner (CLF-C02) & AWS Certified AI Practitioner (CLF-C01)
-]
-
 #experience[Experience]
 
 #item(
-  [Junior Linux Infrastructure Engineer, _formerly Engineering Intern_],
+  [Junior Linux Infrastructure Engineer, _prev. Engineering Intern_],
   "ExpressVPN / Kape Technologies",
   [Apr 2025---Present],
   "Hopewell Centre, Wan Chai"
 )[
-  - Maintain #link("https://www.expressvpn.com/features/trustedserver", [_TrustedServer_]), ephemeral and in-memory OS which production fleet runs in tight release cycles.
-  - Innovate on #link("https://www.expressvpn.com/lightway", [_Lightway_]), the company's pioneering VPN protocol, specifically on end-to-end IPv6 support.
-  - Revamp #link("https://www.expressvpn.com/features/threat-manager", [_Threat Manager_]) refresh frequency and coverage, refactor incremental updates for bandwidth.
+  - Wrote the first _#link("https://doc.dpdk.org/guides-25.11/prog_guide/generic_segmentation_offload_lib.html", "Generic Segmentation Offload")_ prototype of our flagship VPN protocol, _#link("https://www.expressvpn.com/lightway", "Lightway")_.
+  - Above achieved 3#sym.times throughput vs. WireGuard® userspace (microbench, CPU-bound workload over `veth`).
+  - Readied end-to-end IPv6 on _#link("https://www.expressvpn.com/lightway", "Lightway")_, and revamped selective DNS filtering known as _#link("https://www.expressvpn.com/features/threat-manager", "Threat Manager")_.
+  - Code owner of _#link("https://www.expressvpn.com/features/trustedserver", "TrustedServer")_, architect new deployments end-to-end, and sign-off weekly releases.
+]
+
+#gh_item(
+  "Free and Open-Source Software Developer",
+  "Contribute more commonly as a NixOS/Nixpkgs maintainer.",
+  [May 2022---Present],
+  "pulls?q=author%3Ausertam",
+  repo_desc: "All PRs, GitHub"
+)[
+  - #link("https://www.youtube.com/watch?v=M4jS5KQ8_YE", "Presented") at _#link("https://2025.nixcon.org", "NixCon 2025")_ about our roadmap for weaving Nix into private company workflows.
+  - Contribute to open-source projects used by developers worldwide, both personally and professionally.
 ]
 
 #item(
@@ -63,29 +48,27 @@
   [Jul 2023---Apr 2025],
   "HKUST, Clear Water Bay"
 )[
-  - Maintain with manual labor, the labs and server rooms for departmental students and faculty staff.
-  - Sometimes serve as anchor for privileged, professional inter-departmental communications.
+  - Touched actual server racks and retired old hardware; provisioned new BIOS, degaussed HDDs.
+  - Maintained the labs, to check and repair OEM desktops/monitors/cabling, and un-jam the printers.
+  - Sometimes served as anchor for privileged, inter-departmental delivery and communications.
 ]
 
-
 #item(
-  [Honorary Advisor, _formerly UG Representative and Executive Committee_],
+  [Honorary Advisor, _prev. UG Representative and Executive Committee_],
   "The Computer Science and Engineering Students' Society, HKUSTSU",
   [Apr 2023---Present],
   "HKUST, Clear Water Bay"
 )[
-  - Oversee executive operations, provide strategic guidance and support to the student society.
-  - Advocate for students' interests and serve as a liaison between students and faculty staff.
-  - Keynote Speaker of credit-bearing seminars #link("https://www.youtube.com/watch?v=53TWNe3_z38", [_Developing with GitHub_]) and #link("https://csess.su.hkust.edu.hk/activity/149", [_The Unix Philosophy_]).
-  - Co-host of Departmental Briefing for Direct Entry students in 2023, and again in 2024.
+  - Hosted department events, also credit-bearing talks, like #link("https://www.youtube.com/watch?v=53TWNe3_z38", [_Developing with GitHub_]) and #link("https://csess.su.hkust.edu.hk/activity/149", [_The Unix Philosophy_]).
+  - Now to oversee executive operations, and provide strategic guidance to the student society.
+  - People come to me for technical or personal advice, and I enjoy giving them what they need.
 ]
-
 
 #experience[Projects]
 
 #gh_item(
-  "LLVM Toolchain" + dot + "5 build stages in 8h+ build time",
-  "Bleeding-edge LLVM toolchains for cross-compilation, optimized with PGO and LTO.",
+  "LLVM Cross-Compile Toolchain" + dot + "5 build stages in 8h+ build time",
+  "With Profile-Guided Optimization (PGO) and Link-Time Optimization (LTO).",
   "June 2024",
   "usertam/toolchain"
 )[
@@ -94,15 +77,15 @@
 
 #gh_item(
   ConTeXt + "-minimals" + dot + "200+ releases",
-  "Typesetting system made reproducible.",
+  "Typesetting system made reproducible with Nix.",
   "August 2022",
   "usertam/context-minimals"
 )[
-  After analyzing the dependencies of #ConTeXt LMTX (like #LaTeX, derived from #TeX), we rewrite the installation declaratively in `nix`. This results in a far more efficient installation that is both reproducible and portable.
+  After analyzing the dependencies of #ConTeXt LMTX (like #LaTeX, derived from #TeX), we rewrite the installation declaratively in Nix. This results in a far more efficient installation that is both reproducible and portable.
 ]
 
 #gh_item(
-  "Android Kernel Development" + dot + "1.6k+ commits backported",
+  "Android Kernel Development" + dot + "1.8k+ commits backported",
   ["What if you can run `dockerd` on your `aarch64` phone natively?"],
   "September 2021",
   "usertam/dumpling-lineage-kernel"
@@ -110,7 +93,7 @@
   We use open-source kernel trees released by Qualcomm, with upstream changes and custom patches to rebuild the Android kernel, enabling support for custom kernel features (e.g. namespaces for containers).
 ]
 
-#experience[Education]
+#experience[Education & Certifications]
 
 #item(
   "The Hong Kong University of Science and Technology",
@@ -127,8 +110,21 @@
 )
 
 #item(
+  [AWS Community Builder, with 3#sym.times AWS Certified],
+  "Advocating cloud computing through the lens of personal projects.",
+  "January 2025",
+  context box(height: measure("").height,
+    move(dx: -.25em, dy: -.07em,
+      image(height: .9em, "icons/linkedin.svg")))
+  + link("https://www.linkedin.com/in/usertam/details/certifications", "LinkedIn")
+)[
+  - AWS Certified SysOps Administrator – Associate (SOA-C02)
+  - AWS Certified Cloud Practitioner (CLF-C02) & AWS Certified AI Practitioner (AIF-C01)
+]
+
+#item(
   "The University of Wollongong College Hong Kong",
   "Distinction, Associate of Science in Information Systems Development",
   "July 2022",
-  [Tai Wai, _formerly Kowloon City_]
+  [Tai Wai]
 )[]

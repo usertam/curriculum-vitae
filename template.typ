@@ -28,9 +28,6 @@
 
   // Footer style.
   set page(footer: columns(2, {
-    set align(left)
-    set text(.75em, luma(64), tracking: .05pt, weight: "medium")
-
     show "Mona Sans": link("https://github.com/github/mona-sans", "Mona Sans")
     show "Typst": link("https://github.com/typst/typst", "Typst")
 
@@ -47,15 +44,16 @@
       handle("20xx-xx-xx (preview)")
     }
 
+    set text(.75em, luma(64), tracking: .05pt, weight: "medium")
+    set align(left + bottom)
     [
-      #sym.copyright 2026 #author.name
-      #h(.2em) #sym.dot.c #h(.2em) #label \
-      Typeset in 9pt Mona Sans with Typst.
+      Typeset in 9#h(1em/6)pt Mona Sans. \
+      Last revised on #label.
     ]
 
     colbreak()
 
-    set align(right)
+    set align(right + bottom)
     linebreak()
     title
     h(.55em) + sym.dot.c + h(.55em)
