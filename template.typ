@@ -84,7 +84,7 @@
     text(1.1em, handle(height: 0.1em, "@" + author.handle))
     linebreak()
     v(.875em, weak: true)
-    text(tracking: .1pt, bio)
+    text(luma(64), tracking: .1pt, bio)
     h(1fr)
   }, {
     set align(right)
@@ -138,7 +138,7 @@
     box(inset: (left: 1em), {
       text(weight: "medium", title)
       linebreak()
-      emph(subtitle)
+      text(fill: luma(64), emph(subtitle))
       v(-.25em)
       body
     })
@@ -147,7 +147,7 @@
   place(right,
     text(weight: "medium", date)
     + linebreak()
-    + location
+    + text(fill: luma(64), location)
   )
 })
 
