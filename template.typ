@@ -9,10 +9,10 @@
 ) = {
   // Set document properties and style.
   set document(title: title, author: author.name, description: bio.split(".").at(0), keywords: author.values())
-  set page(paper: "a4", margin: 1in)
+  set page(paper: "a4", margin: (x: 1in, y: 1.375in))
   set par(justify: true, leading: .55em)
   set text(9pt, font: "Mona Sans", weight: "regular", fallback: false)
-  show raw: text.with(font: "DM Mono")
+  show raw: text.with(1em, font: "DM Mono")
   set underline(stroke: .2pt)
 
   // Set tracking for Mona Sans in nixpkgs.
@@ -30,13 +30,11 @@
     }),
     outset: (y: .2em),
     radius: .2em,
-    raw(body)
+    text(.8em, font: "DM Mono", body)
   )
 
   // Footer style.
-  set page(footer: columns(2, {
-    show "Mona Sans": link("https://github.com/github/mona-sans", "Mona Sans")
-    show "Typst": link("https://github.com/typst/typst", "Typst")
+  set page(footer: context columns(2, {
     show "Curriculum Vitae": "Curriculum Vitæ"
 
     let label = if "rev" in sys.inputs {
@@ -54,10 +52,6 @@
 
     set text(.75em, luma(64), tracking: .05pt, weight: "medium")
     set align(left + bottom)
-    [
-      Typeset in 9#h(1em/6)pt Mona Sans. \
-      Last revised on #label.
-    ]
 
     colbreak()
 
@@ -70,7 +64,6 @@
 
   // Fine header/footer adjustment.
   set page(footer-descent: 0em)
-  v(.5fr)
 
   // Header with name, description and links.
   grid(align: bottom, columns: 2, {
@@ -91,29 +84,49 @@
     show link: underline
     set text(.9em, luma(64), tracking: .1pt, weight: "medium")
 
-    let _emoji(e) = if "rev" in sys.inputs {
-      box(move(dy: -.5pt, text(.8em, font: "Twitter Color Emoji", top-edge: "bounds", e)))
-    } else {
-      box(move(dy: -.5pt, text(.9em, font: "Twitter Color Emoji", top-edge: "bounds", e)))
+    let svgicon(path, sz: {}, mv: {}) = {
+      let raw = read(path)
+      let craw = raw.replace("currentColor", luma(96).to-hex())
+      let img = image(bytes(craw), ..sz)
+      let bimg = box(height: 0em, img)
+      box(move(..mv, bimg))
     }
 
-    _emoji(emoji.globe.as.au) + " " + link(author.website)
+    svgicon(mv: (dy: 1.75pt, dx: .5pt), sz: (height: 1.1em), "icons/material-symbols--globe-asia.svg") + " " + link(author.website)
     linebreak()
-    _emoji(emoji.tray.mail) + " " + link("mailto:" + author.email, author.email)
+    svgicon(mv: (dy: 1.5pt, dx: .25pt), sz: (height: 1.05em), "icons/material-symbols--mail-rounded.svg") + " " + link("mailto:" + author.email, author.email)
   })
 
   v(1.5em, weak: true)
 
   // Set body style.
   show link: underline
-  show raw: text.with(1.2em, tracking: -.25pt, weight: "light")
+  show raw: text.with(1.25em, font: "DM Mono", tracking: -.5pt, weight: "light")
 
   body
-
-  v(1fr)
 }
 
-#let experience(body) = v(.25em) + context block({
+#let url(url, desc, style: emph) = {
+  link(url, style(text(desc)))
+  h(.2em)
+  box(height: 0em, width: .5em,
+    move(dy: -.7em,
+      link(url, image(height: 1em, "icons/material-symbols-light--arrow-outward-rounded.svg"))
+    )
+  )
+}
+
+#let yt_url(url, desc, style: emph) = {
+  link(url, style(text(desc)))
+  h(.2em)
+  box(height: 0em, width: .85em,
+    move(dy: -.76em,
+      link(url, image(height: 1em, "icons/material-symbols--youtube-video-outline-rounded.svg"))
+    )
+  )
+}
+
+#let experience(body) = v(.5em) + context block({
   let title = text(1.1em,
     weight: "medium",
     tracking: .1pt,
@@ -158,7 +171,7 @@
   context box(height: measure("").height,
     move(dx: -.25em, dy: -.125em,
       image(height: .9em, "icons/github.svg")))
-  + link("https://github.com/" + repo, repo_desc),
+  + url("https://github.com/" + repo, repo_desc, style: a => a),
   body
 )
 
