@@ -9,7 +9,7 @@
 ) = {
   // Set document properties and style.
   set document(title: title, author: author.name, description: bio.split(".").at(0), keywords: author.values())
-  set page(paper: "a4", margin: (x: 1in, y: 1.375in))
+  set page(paper: "a4", margin: (x: 1in, y: 1.25in))
   set par(justify: true, leading: .55em)
   set text(9pt, font: "Mona Sans", weight: "regular", fallback: false)
   show raw: text.with(1em, font: "DM Mono")
@@ -35,6 +35,7 @@
 
   // Footer style.
   set page(footer: context columns(2, {
+    // "I have a PhD in Latin."
     show "Curriculum Vitae": "Curriculum Vitæ"
 
     let label = if "rev" in sys.inputs {
@@ -65,8 +66,10 @@
   // Fine header/footer adjustment.
   set page(footer-descent: 0em)
 
+
   // Header with name, description and links.
   grid(align: bottom, columns: 2, {
+    // Left
     text(1.5em,
       weight: "semibold",
       features: (smcp: 1),
@@ -80,6 +83,7 @@
     text(luma(64), tracking: .1pt, bio)
     h(1fr)
   }, {
+    // Right
     set align(right)
     show link: underline
     set text(.9em, luma(64), tracking: .1pt, weight: "medium")
@@ -151,16 +155,16 @@
     box(inset: (left: 1em), {
       text(weight: "medium", title)
       linebreak()
-      text(fill: luma(64), emph(subtitle))
+      text(fill: luma(48), emph(subtitle))
       v(-.25em)
       body
     })
   )
   colbreak()
   place(right,
-    text(weight: "medium", date)
+    text(luma(32), weight: "medium", date)
     + linebreak()
-    + text(fill: luma(64), location)
+    + text(fill: luma(48), location)
   )
 })
 

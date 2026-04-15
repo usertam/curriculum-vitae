@@ -25,16 +25,16 @@
   [Apr 2025---Present],
   "Hopewell Centre, Wan Chai"
 )[
-  - Wrote the 10$thin$Gbps+ #url("https://doc.dpdk.org/guides-25.11/prog_guide/generic_segmentation_offload_lib.html", "Generic Segmentation Offload (GSO)") prototype for the #url("https://www.expressvpn.com/lightway", "Lightway") protocol.
-  - Implemented end-to-end IPv6 support for #url("https://www.expressvpn.com/lightway", "Lightway,") merging with existing IPv4 infra on  #url("https://www.expressvpn.com/features/trustedserver", "TrustedServer.")
-  - Re-architected DNS filtering #url("https://www.expressvpn.com/features/threat-manager", "Threat Manager") to evaluate and recompile regex lists from 30+ to 5 minutes.
-  - Co-maintain #url("https://www.expressvpn.com/features/trustedserver", "TrustedServer,") architected deployments end-to-end, and signed off weekly releases.
-  - #yt_url("https://www.youtube.com/watch?v=M4jS5KQ8_YE", "Spoke") at #url("https://2025.nixcon.org", "NixCon 2025") on #url("https://www.expressvpn.com/features/trustedserver", "TrustedServer")  and Nix, also represented ExpressVPN at #url("https://eventyay.com/e/88882f3e", "FOSSASIA 2026.")
+  - Wrote the 10$thin$Gbps+ #url("https://doc.dpdk.org/guides-25.11/prog_guide/generic_segmentation_offload_lib.html", "Generic Segmentation Offload (GSO)") and zero-copy VPN prototype for #url("https://www.expressvpn.com/lightway", "Lightway.")
+  - Implemented end-to-end IPv6 support for #url("https://www.expressvpn.com/lightway", "Lightway") in addition to existing IPv4 infra on #url("https://www.expressvpn.com/features/trustedserver", "TrustedServer.")
+  - Re-architected the DNS filtering #url("https://www.expressvpn.com/features/threat-manager", "Threat Manager") pipeline, cutting evaluation time from 30 to 5 minutes.
+  - Co-maintain the #url("https://www.expressvpn.com/features/trustedserver", "TrustedServer") ecosystem across multi-cloud and bare metal, reviewed fleet-wide configuration changes, coordinated deployments end-to-end and signed off weekly releases.
+  - #yt_url("https://www.youtube.com/watch?v=M4jS5KQ8_YE", "Spoke") at #url("https://2025.nixcon.org", "NixCon 2025") on #url("https://www.expressvpn.com/features/trustedserver", "TrustedServer") and Nix, also represented ExpressVPN at #url("https://eventyay.com/e/88882f3e", "FOSSASIA 2026.")
 ]
 
 #gh_item(
   "Free and Open-Source Software Developer",
-  "A fellow NixOS/Nixpkgs maintainer.",
+  "NixOS/Nixpkgs maintainer",
   [May 2022---Present],
   "pulls?q=author%3Ausertam",
   repo_desc: "GitHub PRs"
@@ -45,13 +45,25 @@
 ]
 
 #item(
+  [AWS Community Builder, with 3#sym.times AWS Certified],
+  "AWS Community Builders Program / AWS Training and Certification",
+  [Jan 2025---May 2026],
+  context box(height: measure("").height,
+    move(dx: -.25em, dy: -.07em,
+      image(height: .9em, "icons/linkedin.svg")))
+  + url("https://www.linkedin.com/in/usertam/details/certifications", [_LinkedIn_])
+)[
+  - AWS Certified SysOps Administrator – Associate (SOA-C02)
+  - AWS Certified Cloud Practitioner (CLF-C02) & AWS Certified AI Practitioner (AIF-C01)
+]
+
+#item(
   [Honorary Advisor, _prev. UG Representative and Executive Committee_],
   "The Computer Science and Engineering Students' Society, HKUSTSU",
   [Apr 2023---Present],
   "HKUST, Clear Water Bay"
 )[
   - Hosted dept. events and credit-bearing talks, like #yt_url("https://www.youtube.com/watch?v=53TWNe3_z38", "Developing with GitHub") and #url("https://csess.su.hkust.edu.hk/activity/149", "The Unix Philosophy.")
-  - Now to oversee executive operations, and provide strategic guidance to the student society.
   - Provided technical mentorship and career guidance to students across departments.
 ]
 
@@ -65,7 +77,7 @@
 )[
   Produces a minimal statically-linked `musl` userland from Nixpkgs, resembling a standard GNU userland; alongside a patched Linux 5.4 kernel with custom device tree modifications (UART rerouting on the pogo pin) and binutils/GPU driver compatibility fixes for the downstream fork.
   
-  Tailscale is baked in with native `tun` networking, exposing the tablet's web UI over a private network without USB tethering. Fully reproducible via Nix flakes; the resulting kernel image is loadable via `kexec` for live, in-place kernel replacement without reboots or reflashing.
+  Tailscale is baked in with native `tun` networking, exposing the tablet's web UI over a private network without USB tethering. Fully reproducible via Nix flakes; the built kernel image is loadable via `kexec` without reboots.
 ]
 
 #gh_item(
@@ -74,9 +86,9 @@
   "June 2024",
   "usertam/toolchain"
 )[
-  Weekly multi-stage build of a #url("https://github.com/llvm/llvm-project", "latest LLVM tip") cross-compilation toolchain. Targets `x86_64` and `aarch64`, and incorporates ThinLTO, PGO and BOLT using a Linux kernel defconfig build as the profiling workload.
+  Weekly multi-stage build of a #url("https://github.com/llvm/llvm-project", "latest LLVM tip") cross-compilation toolchain. Targets `x86_64` and `aarch64`, and incorporates ThinLTO, PGO and PLO using Linux kernel `defconfig` builds as the profiling workload.
   
-  The pipeline runs 4 sequential LLVM builds: bootstrap → instrumented → profiling → PGO-optimised final, demonstrating how PGO requires the compiler itself to be compiled twice with a representative workload profiled. Distributes a portable binary tarball with relative `RPATH` to avoid glibc version pinning.
+  The pipeline runs 4 LLVM build stages in total: bootstrap → instrumented → profiling → PGO-optimized build, the result is an optimized toolchain with the representative compiling workload profiled. It is distributed as a portable binary tarball with relative `RPATH` to avoid glibc version pinning.
 ]
 
 #gh_item(
@@ -85,7 +97,7 @@
   "September 2021",
   "usertam/dumpling-lineage-kernel"
 )[
-  Maintained a Linux 4.4 kernel tree for OnePlus 5T, forked from LineageOS and rebased onto the latest stable, then onto CIP #url("https://cip-project.org/about/linux-kernel-core-packages", "Super-Long-Term Stable") branch for sustained backports. Tracked and merged linux-stable across 13+ releases, sifted through thousands of commits across Qualcomm's Snapdragon trees to identify fixes applicable to the MSM8998; resolving merge conflicts where upstream code paths diverged.
+  Maintained a Linux 4.4 kernel tree for OnePlus 5T, forked from LineageOS and rebased onto the latest stable, then onto CIP #url("https://cip-project.org/about/linux-kernel-core-packages", "Super-Long-Term Stable") branch for sustained backports. Tracked and merged linux-stable across 13+ releases and sifted through Qualcomm's trees to identify fixes applicable to the MSM8998.
 
   Beyond stability, the defconfig was extended to enable e.g. namespaces, cgroups, that were absent from the vendor baseline, then bootstrapped a fully working container stack on Android with a read-only rootfs.
 ]
@@ -116,7 +128,7 @@
   none,
   none,
   (
-    "C",
+    "C (GNU C)",
     "C++11/17",
     "Rust",
     "Python 3",
@@ -133,14 +145,54 @@
   none,
   (
     "Kernel bypass (DPDK, XDP)",
-    "eBPF",
-    "io_uring",
-    "CPU affinity/isolation",
+    "eBPF (XDP, TC)",
+    "CPU affinity",
     "NUMA-aware allocation",
-    linebreak() + "SIMD",
+    linebreak() + "ring buffers",
+    "io_uring",
+    "SIMD",
     "hugepages",
-    "zero-copy with I/O scatter",
-    "cache line optimization",
+    "zero-copy",
+    "I/O gather-scatter",
+    "cache line optimization"
+  ).join(dot)
+)
+
+#item(
+  "Cloud Infrastructure / Paravirtualization",
+  v(-.3em),
+  none,
+  none,
+  (
+    "AWS (EC2/Spot/Lambda, S3/Glacier, VPC/TGW/PrivateLink, IAM, CloudWatch/CloudTrail)",
+    linebreak() + "microVM (Firecracker, cloud-hypervisor)",
+  ).join(dot)
+)
+
+#item(
+  "DevOps",
+  v(-.3em),
+  none,
+  none,
+  (
+    "GitHub Actions",
+    "GitLab CI",
+    "CircleCI",
+    "Docker Compose",
+    "Docker Hub",
+    "Podman",
+    "Earthly",
+    "BuildKit",
+    linebreak() + "Skopeo",
+    "OCI",
+    "Terraform",
+    "OpenTofu",
+    "Pulumi",
+    "Ansible",
+    "Vagrant",
+    "Grafana",
+    "Prometheus",
+    "Rundeck"
   ).join(dot)
 )
 
@@ -151,7 +203,7 @@
   none,
   (
     "Sysctl tuning",
-    "namespaces",
+    "namespaces/containers",
     "seccomp",
     "kprobes",
     "uprobes",
@@ -167,17 +219,18 @@
   none,
   none,
   (
-    "TSO/USO/GSO/GRO",
+    "TSO/USO/GSO/GRO offload",
     "TCP coalescing",
-    "IP checksum",
-    "eBPF steering",
-    "TCP congestion control",
-    linebreak() + "D/TLS 1.3",
+    "checksum offload",
+    "D/TLS 1.3",
     "QUIC",
+    "eBPF steering",
+    "socket splicing",
+    "congestion control",
+    "netfilter subsystem",
+    "veth integration testing",
     "SR-IOV",
-    "macvlan",
-    "veth",
-    "nftables",
+    "virtio-net",
   ).join(dot)
 )
 
@@ -193,7 +246,7 @@
     "futex",
     "spinlocks",
     "atomics",
-    linebreak() + "memory ordering",
+    "memory ordering",
     "RCU",
     "shared memory IPC",
   ).join(dot)
@@ -212,6 +265,7 @@
     "ltrace",
     "ftrace",
     "tcpdump",
+    "tshark",
   ).join(dot)
 )
 #item(
@@ -229,24 +283,7 @@
   ).join(dot)
 )
 
-#v(.5em)
-
-#experience[Certifications]
-
-#item(
-  [AWS Community Builder, with 3#sym.times AWS Certified],
-  v(-.2em),
-  "January 2025",
-  context box(height: measure("").height,
-    move(dx: -.25em, dy: -.07em,
-      image(height: .9em, "icons/linkedin.svg")))
-  + url("https://www.linkedin.com/in/usertam/details/certifications", "LinkedIn")
-)[
-  - AWS Certified SysOps Administrator – Associate (SOA-C02)
-  - AWS Certified Cloud Practitioner (CLF-C02) & AWS Certified AI Practitioner (AIF-C01)
-]
-
-#v(.25em)
+#v(.75em)
 
 #experience[Education]
 
