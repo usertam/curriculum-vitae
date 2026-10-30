@@ -9,18 +9,11 @@
 ) = {
   // Set document properties and style.
   set document(title: title, author: author.name, description: bio.split(".").at(0), keywords: author.values())
-  set page(paper: "a4", margin: (x: 1in, y: 1.25in))
+  set page(paper: "us-letter", margin: (x: 1in, y: 1.25in))
   set par(justify: true, leading: .55em)
   set text(9pt, font: "Mona Sans", weight: "regular", fallback: false)
   show raw: text.with(1em, font: "DM Mono")
   set underline(stroke: .2pt)
-
-  // Set tracking for Mona Sans in nixpkgs.
-  show emph: if "rev" in sys.inputs {
-    text.with(tracking: .25pt)
-  } else {
-    text
-  }
 
   // Handle style.
   let handle(height: none, body) = context box(
@@ -35,9 +28,6 @@
 
   // Footer style.
   set page(footer: context columns(2, {
-    // "I have a PhD in Latin."
-    show "Curriculum Vitae": "Curriculum Vitæ"
-
     let label = if "rev" in sys.inputs {
       if "dirty" not in sys.inputs.rev {
         link(
@@ -79,7 +69,7 @@
     h(.5em)
     text(1.1em, handle(height: 0.1em, "@" + author.handle))
     linebreak()
-    v(.875em, weak: true)
+    v(.8em, weak: true)
     text(luma(64), tracking: .1pt, bio)
     h(1fr)
   }, {
