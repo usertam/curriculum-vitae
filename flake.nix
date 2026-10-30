@@ -28,12 +28,15 @@
           twitter-color-emoji
         ];
 
+        # Static OTFs only for Mona Sans: its truetype dir has several variable fonts with the
+        # same family/style names, and which one typst picks depends on filesystem order.
         env.TYPST_FONT_PATHS =
           builtins.concatStringsSep ":" (
             builtins.concatMap (p: [
               "${p}/share/fonts/opentype"
+            ] ++ pkgs.lib.optional (p != pkgs.mona-sans)
               "${p}/share/fonts/truetype"
-            ]) final.passthru.fonts
+            ) final.passthru.fonts
           );
 
         configurePhase = ''

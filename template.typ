@@ -11,7 +11,7 @@
   set document(title: title, author: author.name, description: bio.split(".").at(0), keywords: author.values())
   set page(paper: "us-letter", margin: (x: 1in, y: 1.25in))
   set par(justify: true, leading: .55em)
-  set text(9pt, font: "Mona Sans", weight: "regular", fallback: false)
+  set text(9pt, font: "Mona Sans", weight: "regular", fallback: false, stylistic-set: 10)
   show raw: text.with(1em, font: "DM Mono")
   set underline(stroke: .2pt)
 
